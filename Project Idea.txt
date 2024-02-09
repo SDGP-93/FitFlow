@@ -1,0 +1,4 @@
+I need to build a workout recomendation app for fat loss using ML, it should have the ability to change the workout plan with time(user progress), initially the workout should be provided based on experience level( beginner,intermediate and advanced and gender  and aged based) only for bodyweight exercises, the daily workout should change based on activity level( primarily step count ), lets say 800 calories should be burned by an individual to lose fat and he walks 10k steps burning 500 calories, we should provide a 300 calorie workout for that day
+
+
+

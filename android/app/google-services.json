@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "956896735970",
+    "project_id": "fitflow2",
+    "storage_bucket": "fitflow2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:956896735970:android:ca185e52889ec05b07e4bb",
+        "android_client_info": {
+          "package_name": "com.example.auth3"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFnZxtnlKaJLIZsEEmw8mhCjb1zlYGmdw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
