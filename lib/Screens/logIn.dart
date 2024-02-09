@@ -60,7 +60,7 @@ class _logInState extends State<logIn> {
                   // Handle specific errors
                   if (e.code == 'wrong-password') {
                     setState(() {
-                      _errorMessage = 'Invalid password entered';
+                      _errorMessage = 'Invalid password';
                     });
                   } else {
                     setState(() {
