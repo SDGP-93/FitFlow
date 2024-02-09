@@ -5,7 +5,7 @@ class login_success extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("FitFlow"),
+        title: const Text("FitFlows"),
         backgroundColor: Colors.black,
         foregroundColor: Colors.white,
       ),
