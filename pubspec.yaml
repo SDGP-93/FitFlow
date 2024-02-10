@@ -62,3 +62,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/FitFlow_logo.png
+    - assets/insta.png
+    - assets/fb.png
+    - assets/tele.png
+    - assets/x.png
+    - assets/hfBG.jpg
+    - assets/logo.png
