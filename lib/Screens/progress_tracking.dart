@@ -41,7 +41,7 @@ class _WeightSetPageState extends State<WeightSetPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Enter Weight and Week'),
+        title: const Text('Enter Weight and Week Number'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
