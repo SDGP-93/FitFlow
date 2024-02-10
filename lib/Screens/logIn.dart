@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_success.dart';
+import 'input.dart';
 
 class logIn extends StatefulWidget {
   const logIn({Key? key}) : super(key: key);
@@ -54,7 +55,7 @@ class _logInState extends State<logIn> {
                   // Login successful, navigate to the success screen
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => login_success()),
+                    MaterialPageRoute(builder: (context) => input()),
                   );
                 } on FirebaseAuthException catch (e) {
                   // Handle specific errors

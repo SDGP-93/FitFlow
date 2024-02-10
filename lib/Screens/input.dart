@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(GymApp());
+  runApp(input());
 }
 
-class GymApp extends StatelessWidget {
+class input extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
