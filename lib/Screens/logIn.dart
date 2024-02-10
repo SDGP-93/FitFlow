@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login_success.dart';
 import 'input.dart';
 
 class logIn extends StatefulWidget {
