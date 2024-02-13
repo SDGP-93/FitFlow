@@ -68,3 +68,6 @@ flutter:
     - assets/x.png
     - assets/hfBG.jpg
     - assets/logo.png
+    - assets/welcomeBGF.jpg
+    - assets/regBG.jpg
+    - assets/loginBG.jpg
