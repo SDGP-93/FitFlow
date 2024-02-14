@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'common_navbar.dart';
-/*import 'input.dart';
-import 'stepcounter.dart';
+import 'input.dart';
+import 'stepsCounter.dart';
 import 'progress_tracking.dart';
 import 'about_us.dart';
-import 'settings.dart';
-import 'feedback.dart';*/
+//import 'settings.dart';
+//import 'feedback.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -43,16 +43,16 @@ class HomePage extends StatelessWidget {
                       shrinkWrap: true,
                       children: [
                         buildButton(context, '', 'assets/db.png', () {
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => InputPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Input()));
                         }),
                         buildButton(context, '', 'assets/cal3.png', () {
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterCircle()));
                         }),
                         buildButton(context, '', 'assets/pro2.png', () {
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => ProgressTrackingPage()));
                         }),
                         buildButton(context, '', 'assets/logo.png', () {
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUsPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => FitflowHistoryPage()));
                         }),
                         buildButton(context, '', 'assets/set.png', () {
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
