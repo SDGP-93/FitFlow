@@ -6,6 +6,7 @@ import 'progress_tracking.dart';
 import 'about_us.dart';
 import 'settings.dart';
 import 'feedback.dart';*/
+import 'weight_input_page.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -49,7 +50,7 @@ class HomePage extends StatelessWidget {
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterPage()));
                         }),
                         buildButton(context, '', 'assets/pro2.png', () {
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => ProgressTrackingPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => WeightInputPage()));
                         }),
                         buildButton(context, '', 'assets/logo.png', () {
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => AboutUsPage()));
