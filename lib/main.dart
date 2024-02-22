@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FitFlow App',
-      home: homePage(), // Use the StartUp widget as the home
+      home: startUp(), // Use the StartUp widget as the home
     );
   }
 }

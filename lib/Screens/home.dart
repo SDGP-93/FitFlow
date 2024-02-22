@@ -6,6 +6,9 @@ import 'stepsCounter.dart';
 import 'about_us.dart';
 //import 'settings.dart';
 //import 'feedback.dart';
+import 'weight_input_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class homePage extends StatelessWidget {
   @override
@@ -43,13 +46,13 @@ class homePage extends StatelessWidget {
                       shrinkWrap: true,
                       children: [
                         buildButton(context, '', 'assets/db.png', () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) =>input()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => input()));
                         }),
                         buildButton(context, '', 'assets/cal3.png', () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StepCounterCircle()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterCircle()));
                         }),
                         buildButton(context, '', 'assets/pro2.png', () {
-                          //Navigator.push(context, MaterialPageRoute(builder: (context) => ProgressTrackingPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => WeightInputPage()));
                         }),
                         buildButton(context, '', 'assets/logo.png', () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => FitflowHistoryPage()));
@@ -76,6 +79,33 @@ class homePage extends StatelessWidget {
                         textAlign: TextAlign.center, // Center text horizontally
                       ),
                     ),
+                  ),
+                  FutureBuilder<User?>(
+                    future: FirebaseAuth.instance.authStateChanges().first,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return CircularProgressIndicator();
+                      } else {
+                        if (snapshot.hasData) {
+                          User? user = snapshot.data;
+                          return Text(
+                            '                   User ID:  ${user!.uid}',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                            ),
+                          );
+                        } else {
+                          return Text(
+                            'Not logged in',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                            ),
+                          );
+                        }
+                      }
+                    },
                   ),
                 ],
               ),
