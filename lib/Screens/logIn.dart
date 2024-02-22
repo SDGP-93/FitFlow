@@ -1,7 +1,8 @@
+import 'package:auth3/Screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'login_success.dart';
-import 'home.dart';
+
 
 class logIn extends StatefulWidget {
   const logIn({Key? key}) : super(key: key);
@@ -96,7 +97,7 @@ class _logInState extends State<logIn> {
 
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomePage()),
+                        MaterialPageRoute(builder: (context) => homePage()),
                       );
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'wrong-password') {

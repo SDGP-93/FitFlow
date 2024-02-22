@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'common_navbar.dart';
 import 'input.dart';
 import 'stepsCounter.dart';
-import 'progress_tracking.dart';
+//import 'progress_tracking.dart';
 import 'about_us.dart';
 //import 'settings.dart';
 //import 'feedback.dart';
 
-class HomePage extends StatelessWidget {
+class homePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,10 +43,10 @@ class HomePage extends StatelessWidget {
                       shrinkWrap: true,
                       children: [
                         buildButton(context, '', 'assets/db.png', () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Input()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) =>input()));
                         }),
                         buildButton(context, '', 'assets/cal3.png', () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => StepCounterCircle()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const StepCounterCircle()));
                         }),
                         buildButton(context, '', 'assets/pro2.png', () {
                           //Navigator.push(context, MaterialPageRoute(builder: (context) => ProgressTrackingPage()));
@@ -136,6 +136,6 @@ class HomePage extends StatelessWidget {
 
 void main() {
   runApp(MaterialApp(
-    home: HomePage(),
+    home: homePage(),
   ));
 }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'logIn.dart';
 import 'signUp.dart'; // Import the SignUp page
 
-class StartUp extends StatefulWidget {
+class startUp extends StatefulWidget {
   @override
   _StartUpState createState() => _StartUpState();
 }
 
-class _StartUpState extends State<StartUp> with SingleTickerProviderStateMixin {
+class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
@@ -143,5 +143,5 @@ class _StartUpState extends State<StartUp> with SingleTickerProviderStateMixin {
 }
 
 void main() => runApp(MaterialApp(
-  home: StartUp(),
+  home: startUp(),
 ));
