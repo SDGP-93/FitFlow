@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'common_navbar.dart';
 import 'input.dart';
 import 'stepsCounter.dart';
-//import 'progress_tracking.dart';
 import 'about_us.dart';
-//import 'settings.dart';
-//import 'feedback.dart';
 import 'weight_input_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class homePage extends StatelessWidget {
+  void refreshPage(BuildContext context) {
+    Navigator.pop(context); // Close the current page
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => homePage()),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true, // Set this to true to extend the body behind the app bar
-      appBar: CommonNavBar(),
+      extendBodyBehindAppBar: true,
+      appBar: CommonNavBar(onBackPressed: () => refreshPage(context)),
       body: Stack(
         children: [
-          // Background Image
           Positioned.fill(
             child: Image.asset(
               'assets/homeBG2.jpg',
@@ -33,7 +37,7 @@ class homePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: kToolbarHeight + 0, // Adjust as per your requirement
+                    height: kToolbarHeight + 0,
                   ),
                   SizedBox(
                     height: 17,
@@ -70,40 +74,56 @@ class homePage extends StatelessWidget {
                     height: 100,
                     child: Center(
                       child: Text(
-                        'Sore Now.\n'
-                            'Strong Forever.', // Title text placeholder, replace with actual title
+                        'Sore Now.\nStrong Forever.',
                         style: TextStyle(
                           fontSize: 25,
                           color: Colors.white24,
                         ),
-                        textAlign: TextAlign.center, // Center text horizontally
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  FutureBuilder<User?>(
-                    future: FirebaseAuth.instance.authStateChanges().first,
+                  FutureBuilder<DocumentSnapshot>(
+                    future: FirebaseFirestore.instance.collection('info').doc(FirebaseAuth.instance.currentUser!.uid).get(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return CircularProgressIndicator();
-                      } else {
-                        if (snapshot.hasData) {
-                          User? user = snapshot.data;
-                          return Text(
-                            '                   User ID:  ${user!.uid}',
+                      } else if (!snapshot.hasData || !snapshot.data!.exists) {
+                        return Center(
+                          child: Text(
+                            'Update Your Username',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Colors.yellow,
                               fontSize: 10,
                             ),
-                          );
-                        } else {
-                          return Text(
-                            'Not logged in',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
+                          ),
+                        );
+                      } else {
+                        String? username = snapshot.data!.get('username');
+                        return Center(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.cyan, // Adjust shadow color if needed
+                                  spreadRadius: 0,
+                                  blurRadius: 3,
+                                  offset: Offset(0, 4),
+                                ),
+                              ],
                             ),
-                          );
-                        }
+                            child: Text(
+                              '${username ?? 'Not available'}',
+                              style: TextStyle(
+                                color: Colors.yellow,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        );
                       }
                     },
                   ),

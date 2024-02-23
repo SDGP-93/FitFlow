@@ -41,6 +41,7 @@ dependencies:
   pedometer: ^4.0.1
   cloud_firestore: ^4.15.4
   image_picker: ^0.8.4+4
+  video_player: ^2.2.12
 
 dev_dependencies:
   flutter_test:
@@ -88,3 +89,4 @@ flutter:
     - assets/avatar5.jpg
     - assets/avatar6.jpg
     - assets/profileBG.png
+    - assets/splashBGV.mp4
