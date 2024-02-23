@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^4.17.3
   charts_flutter: ^0.12.0
   pedometer: ^4.0.1
+  cloud_firestore: ^4.15.4
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:
@@ -79,3 +81,10 @@ flutter:
     - assets/pro2.png
     - assets/set.png
     - assets/inputBG.jpg
+    - assets/avatar1.jpg
+    - assets/avatar2.jpg
+    - assets/avatar3.jpg
+    - assets/avatar4.jpg
+    - assets/avatar5.jpg
+    - assets/avatar6.jpg
+    - assets/profileBG.png

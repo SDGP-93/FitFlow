@@ -1,8 +1,13 @@
+import 'package:auth3/Screens/profile_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'about_us.dart';
 /*import 'home.dart';
 import 'profile.dart';
 import 'settings.dart';*/
+import 'profile_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 
 class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -53,19 +58,43 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.end, // Align items to the right
                         children: [
+                          // Fetch user profile image URL from Firestore
+                          StreamBuilder<User?>(
+                            stream: FirebaseAuth.instance.authStateChanges(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                                return SizedBox();
+                              }
+                              String userId = snapshot.data!.uid;
+                              return FutureBuilder<DocumentSnapshot>(
+                                future: FirebaseFirestore.instance.collection('profiles').doc(userId).get(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                                    return SizedBox();
+                                  }
+                                  String? profileImage = (snapshot.data!.data() as Map<String, dynamic>?)?['profileImage'];
+                                  return profileImage != null
+                                      ? CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: AssetImage(profileImage),
+                                  )
+                                      : SizedBox();
+                                },
+                              );
+                            },
+                          ),
                           buildMenuItem(context, 'Username', Icons.add_box_sharp, () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
                             );
                           }),
-
                           buildMenuItem(context, 'Profile', Icons.account_circle, () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
+                              MaterialPageRoute(builder: (context) => ProfilePage()),
                             );
                           }),
                           buildMenuItem(context, 'Settings', Icons.settings, () {
@@ -93,6 +122,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                             },
                             icon: Icon(Icons.arrow_back, color: Colors.yellow),
                           ),
+
                         ],
                       ),
                     ),
@@ -142,12 +172,4 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: SafeArea(
-      child: Scaffold(
-        appBar: CommonNavBar(),
-      ),
-    ),
-  ));
-}
+
