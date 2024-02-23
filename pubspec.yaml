@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_core: ^2.25.3
   firebase_auth: ^4.17.3
+  charts_flutter: ^0.12.0
   pedometer: ^4.0.1
 
 dev_dependencies:
@@ -62,3 +63,19 @@ flutter:
   uses-material-design: true
   assets:
     - assets/FitFlow_logo.png
+    - assets/insta.png
+    - assets/fb.png
+    - assets/tele.png
+    - assets/x.png
+    - assets/hfBG.jpg
+    - assets/logo.png
+    - assets/welcomeBGF.jpg
+    - assets/regBG.jpg
+    - assets/loginBG.jpg
+    - assets/cal3.png
+    - assets/db.png
+    - assets/feed.png
+    - assets/homeBG2.jpg
+    - assets/pro2.png
+    - assets/set.png
+    - assets/inputBG.jpg

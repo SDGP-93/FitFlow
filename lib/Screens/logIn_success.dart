@@ -11,7 +11,7 @@ class login_success extends StatelessWidget{
       ),
       body: const Center(
         child: Text(
-          "Log In Successful",
+          "Log In Successfully done",
           style: TextStyle(
             fontSize: 24.0, // Set the font size
             fontWeight: FontWeight.bold, // Optionally set the font weight
