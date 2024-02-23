@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         // Setting the home property of MaterialApp to a Scaffold widget
         appBar: AppBar(
           // Configuring the app bar with a title
-          title: const Text('My Steps counter'), // Setting the title text
+          title: const Text('My Steps Counter'), // Setting the title text
           centerTitle: true, // Centering the title
         ),
         body: const Center(
