@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:auth3/Screens/logIn.dart';
 
 class signUp extends StatefulWidget {
   const signUp({Key? key}) : super(key: key);
@@ -15,16 +16,17 @@ class _SignUpState extends State<signUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: null, // Remove the app top bar
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/regBG.jpg'), // Background image
+            image: AssetImage('assets/signupBG.png'), // Background image
             fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.fromLTRB(16.0, 100.0, 16.0, 0), // Add padding to the top
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -34,15 +36,15 @@ class _SignUpState extends State<signUp> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.cyan), // Change border color to blue when focused
+                      borderSide: BorderSide(color: Colors.black), // Change border color to blue when focused
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.yellow), // Change border color to blue
+                      borderSide: BorderSide(color: Colors.teal), // Change border color to blue
                     ),
                   ),
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: Colors.teal),
                 ),
               ),
               const SizedBox(height: 16),
@@ -53,20 +55,20 @@ class _SignUpState extends State<signUp> {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.cyan),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.yellow),
+                      borderSide: BorderSide(color: Colors.teal),
                     ),
                   ),
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: Colors.teal),
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 100),
               Container(
-                width: 150,
+                width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   gradient: LinearGradient(
@@ -76,7 +78,7 @@ class _SignUpState extends State<signUp> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.cyan,
+                      color: Colors.teal,
                       offset: Offset(0, 2),
                       blurRadius: 3,
                     ),
@@ -89,7 +91,18 @@ class _SignUpState extends State<signUp> {
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
-                      // User creation successful
+                      // Show success message
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Sign up successful!'),
+                          duration: Duration(seconds: 2), // Adjust the duration as needed
+                        ),
+                      );
+                      // Navigate to the login page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => logIn()),
+                      );
                     } catch (e) {
                       // Handle errors here (if needed)
                       print('Sign-up failed: $e');

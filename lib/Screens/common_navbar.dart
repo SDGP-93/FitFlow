@@ -19,7 +19,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
       child: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.teal.withOpacity(0.5),
         elevation: 1,
         shadowColor: Colors.black,
         toolbarHeight: 40,

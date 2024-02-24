@@ -19,16 +19,17 @@ class _logInState extends State<logIn> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: null,
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/loginBG.jpg'),
+            image: AssetImage('assets/loginBG.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.fromLTRB(16.0, 100.0, 16.0, 0), // Add padding to the top
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -38,15 +39,15 @@ class _logInState extends State<logIn> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'E-MAIL',
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.cyan), // Change border color to blue when focused
+                      borderSide: BorderSide(color: Colors.black), // Change border color to blue when focused
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.yellow), // Change border color to blue
+                      borderSide: BorderSide(color: Colors.teal), // Change border color to blue
                     ),
                   ),
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: Colors.teal),
                 ),
               ),
               const SizedBox(height: 16),
@@ -58,20 +59,20 @@ class _logInState extends State<logIn> {
                   decoration: InputDecoration(
                     labelText: 'PASSWORD',
                     errorText: _errorMessage.isEmpty ? null : _errorMessage, // Set errorText to null when errorMessage is empty
-                    labelStyle: TextStyle(color: Colors.white),
+                    labelStyle: TextStyle(color: Colors.black),
                     focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.cyan),
+                      borderSide: BorderSide(color: Colors.black),
                     ),
                     enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Colors.yellow),
+                      borderSide: BorderSide(color: Colors.teal),
                     ),
                   ),
-                  style: TextStyle(color: Colors.yellow),
+                  style: TextStyle(color: Colors.teal),
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 100),
               Container(
-                width: 150,
+                width: 120,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   gradient: LinearGradient(
@@ -81,7 +82,7 @@ class _logInState extends State<logIn> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.cyan,
+                      color: Colors.teal,
                       offset: Offset(0, 2),
                       blurRadius: 3,
                     ),

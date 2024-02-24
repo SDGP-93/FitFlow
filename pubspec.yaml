@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore: ^4.15.4
   image_picker: ^0.8.4+4
   video_player: ^2.2.12
+  fl_chart: ^0.35.0
 
 dev_dependencies:
   flutter_test:
@@ -90,3 +91,7 @@ flutter:
     - assets/avatar6.jpg
     - assets/profileBG.png
     - assets/splashBGV.mp4
+    - assets/welcomeBGF2.png
+    - assets/loginBG.png
+    - assets/signupBG.png
+    - assets/homeBg.png
