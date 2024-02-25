@@ -20,8 +20,8 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
       padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
       child: AppBar(
         backgroundColor: Colors.teal.withOpacity(0.5),
-        elevation: 1,
-        shadowColor: Colors.black,
+        elevation: 3,
+        shadowColor: Colors.teal,
         toolbarHeight: 40,
         leading: Padding(
           padding: const EdgeInsets.all(0.0),
@@ -42,7 +42,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                 shape: null,
                 icon: Icon(
                   Icons.menu,
-                  color: Colors.yellow,
+                  color: Colors.black,
                   size: 40,
                 ),
                 color: Colors.transparent,
@@ -54,8 +54,8 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                         gradient: LinearGradient(
                           colors: [
                             Colors.black.withOpacity(0.75),
-                            Colors.cyan.withOpacity(0.75),
-                            Colors.black.withOpacity(0.75),
+                            Colors.teal.withOpacity(0.75),
+                            Colors.white.withOpacity(0.75),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
@@ -122,7 +122,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                           SizedBox(height: 8),
                           IconButton(
                             onPressed: onBackPressed,
-                            icon: Icon(Icons.check_circle_outline, color: Colors.yellow),
+                            icon: Icon(Icons.check_circle_outline, color: Colors.teal),
                           ),
                           SizedBox(height: 8),
                           IconButton(
@@ -147,6 +147,15 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ],
+        // Add the background image to the app bar
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/appbarBG.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -173,7 +182,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
               title,
               style: TextStyle(color: Colors.white),
             ),
-            Icon(icon, color: Colors.yellow),
+            Icon(icon, color: Colors.white),
           ],
         ),
       ),

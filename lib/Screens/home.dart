@@ -153,7 +153,7 @@ class _HomePageState extends State<homePage> {
                                 child: Text(
                                   '${username ?? 'Not available'}',
                                   style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.white,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -171,7 +171,12 @@ class _HomePageState extends State<homePage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: toggleTheme,
-          child: Icon(Icons.lightbulb),
+          backgroundColor: Colors.black,
+          mini: true,
+          child: Icon(
+            Icons.light_mode,
+            color: Colors.teal,
+          ),
         ),
       ),
     );
@@ -185,7 +190,7 @@ class _HomePageState extends State<homePage> {
       transform: Matrix4.identity()..scale(1.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        color: const Color.fromARGB(255, 0, 0, 0).withOpacity(1),
+        color: Colors.black,
         image: DecorationImage(
           image: AssetImage(backgroundImage),
           fit: BoxFit.cover,

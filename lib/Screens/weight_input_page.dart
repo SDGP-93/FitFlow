@@ -22,35 +22,6 @@ class _WeightInputPageState extends State<WeightInputPage> {
     _retrieveWeightData();
   }
 
-  Future<void> _retrieveWeightData() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    final User? user = _auth.currentUser;
-    if (user != null) {
-      final String uid = user.uid;
-
-      try {
-        QuerySnapshot weightSnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(uid)
-            .collection('weightData')
-            .get();
-
-        setState(() {
-          _weightData = weightSnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
-          // Remove weeks already selected
-          _weeks = _weeks.where((week) => !_weightData.any((data) => data['week'] == week)).toList();
-          // Check if the selected week is still available
-          if (!_weeks.contains(_selectedWeek)) {
-            // If not, select the first available week
-            _selectedWeek = _weeks.isNotEmpty ? _weeks.first : '';
-          }
-        });
-      } catch (error) {
-        print('Failed to retrieve weight data: $error');
-      }
-    }
-  }
-
   void _submitData() async {
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final User? user = _auth.currentUser;
@@ -67,9 +38,44 @@ class _WeightInputPageState extends State<WeightInputPage> {
             .add({'week': week, 'weight': weight});
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Weight data added successfully')));
-        _retrieveWeightData(); // Refresh weight data after adding new entry
+
+        // Refresh weight data after adding new entry
+        _retrieveWeightData();
       } catch (error) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to add weight data: $error')));
+      }
+    }
+  }
+
+  Future<void> _retrieveWeightData() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final User? user = _auth.currentUser;
+    if (user != null) {
+      final String uid = user.uid;
+
+      try {
+        QuerySnapshot weightSnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(uid)
+            .collection('weightData')
+            .get();
+
+        List<Map<String, dynamic>> weightData = weightSnapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+
+        setState(() {
+          _weightData = weightData;
+          // Sort weight data by week number
+          _weightData.sort((a, b) => a['week'].compareTo(b['week']));
+          // Remove weeks already selected
+          _weeks = _weeks.where((week) => !_weightData.any((data) => data['week'] == week)).toList();
+          // Check if the selected week is still available
+          if (!_weeks.contains(_selectedWeek)) {
+            // If not, select the first available week
+            _selectedWeek = _weeks.isNotEmpty ? _weeks.first : '';
+          }
+        });
+      } catch (error) {
+        print('Failed to retrieve weight data: $error');
       }
     }
   }
@@ -81,82 +87,99 @@ class _WeightInputPageState extends State<WeightInputPage> {
       appBar: CommonNavBar(),
       body: SingleChildScrollView(
         child: Container(
-          // Use MediaQuery to get the screen size and fill the available space
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('assets/homeBG2.jpg'), // Background image
-              fit: BoxFit.cover, // Cover the whole container
+              image: AssetImage('assets/weightBg.png'),
+              fit: BoxFit.cover,
             ),
           ),
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(40, 100, 40, 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                SizedBox(
-                  height: 40, // Set the desired height
-                  child: TextField(
-                    controller: _weightController,
-                    keyboardType: TextInputType.number,
-                    style: TextStyle(color: Colors.yellow),
-                    decoration: InputDecoration(
-                      labelText: 'Weight (in kg)',
-                      labelStyle: TextStyle(color: Colors.white),
+          padding: EdgeInsets.fromLTRB(40, 100, 40, 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 60,
+                child: TextField(
+                  controller: _weightController,
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(color: Colors.teal),
+                  decoration: InputDecoration(
+                    labelText: 'WEIGHT (in KG)',
+                    labelStyle: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              SizedBox(
+                height: 60,
+                child: DropdownButtonFormField<String>(
+                  value: _selectedWeek,
+                  items: _weeks.map((week) {
+                    return DropdownMenuItem<String>(
+                      value: week,
+                      child: Text(
+                        week,
+                        style: TextStyle(color: Colors.black),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedWeek = newValue!;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'SELECT WEEK',
+                    labelStyle: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+              SizedBox(height: 15),
+              Center(
+                child: Container(
+                  width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                    gradient: LinearGradient(
+                      colors: [Colors.black, Colors.black],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.teal,
+                        offset: Offset(0, 2),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    onPressed: _submitData,
+                    child: Text(
+                      'DONE',
+                      style: TextStyle(color: Colors.teal),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                      elevation: 5,
+                      shadowColor: Colors.teal,
                     ),
                   ),
                 ),
-                SizedBox(height: 20), // Add spacing between the widgets
-                SizedBox(
-                  height: 50, // Set the desired height
-                  child: DropdownButtonFormField<String>(
-                    value: _selectedWeek,
-                    items: _weeks.map((week) {
-                      return DropdownMenuItem<String>(
-                        value: week,
-                        child: Text(
-                          week,
-                          style: TextStyle(color: Colors.yellow),
-                        ),
-                      );
-                    }).toList(),
-                    onChanged: (newValue) {
-                      setState(() {
-                        _selectedWeek = newValue!;
-                      });
-                    },
-                    decoration: InputDecoration(
-                      labelText: 'Select Week',
-                      labelStyle: TextStyle(color: Colors.white),
-                    ),
-                  ),
+              ),
+              SizedBox(height: 40),
+              SizedBox(
+                height: 250,
+                child: _weightData.isNotEmpty
+                    ? CustomGraph(weightData: _weightData.map((data) => data.cast<String, String>()).toList())
+                    : Center(
+                  child: Text('No weight data available'),
                 ),
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: _submitData,
-                  child: Text(
-                    'Done',
-                    style: TextStyle(color: Colors.cyan),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    elevation: 5,
-                    shadowColor: Colors.cyan,
-                  ),
-                ),
-                SizedBox(height: 40),
-                SizedBox(
-                  height: 250, // Set the desired height
-                  child: _weightData.isNotEmpty
-                      ? CustomGraph(weightData: _weightData.map((data) => data.cast<String, String>()).toList())
-                      : Center(
-                    child: Text('No weight data available'),
-                  ),
-                ),
-                SizedBox(height: 30),
-                LatestWeightMessage(weightData: _weightData.map((data) => data.cast<String, String>()).toList()),
-              ],
-            ),
+              ),
+              SizedBox(height: 80),
+              LatestWeightMessage(weightData: _weightData.map((data) => data.cast<String, String>()).toList()),
+            ],
           ),
         ),
       ),
@@ -197,11 +220,10 @@ class CustomGraph extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.blue, Colors.black],
+          colors: [Colors.teal.withOpacity(0.5), Colors.black.withOpacity(0.5)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-        borderRadius: BorderRadius.circular(10),
       ),
       padding: const EdgeInsets.all(10), // Adjust the padding as needed
       child: LineChart(
@@ -212,11 +234,11 @@ class CustomGraph extends StatelessWidget {
               isCurved: true,
               colors: spots.map((spot) {
                 if (spot.y == highestWeight) {
-                  return Colors.red; // Set color to red for highest weight dot
+                  return Colors.yellow; // Set color to red for highest weight dot
                 } else if (spot.y == lowestWeight) {
-                  return Colors.green; // Set color to green for lowest weight dot
+                  return Colors.white; // Set color to green for lowest weight dot
                 } else {
-                  return Colors.yellow; // Default color for other dots
+                  return Colors.black; // Default color for other dots
                 }
               }).toList(),
               dotData: FlDotData(show: true), // Show dots
@@ -252,7 +274,11 @@ class CustomGraph extends StatelessWidget {
               margin: 10,
             ),
           ),
-          gridData: FlGridData(show: false), // Hide gridlines
+          gridData: FlGridData(
+            show: true,
+            drawHorizontalLine: false, // Hide top horizontal line
+            drawVerticalLine: false, // Hide right vertical line
+          ),
         ),
       ),
     );
@@ -271,30 +297,56 @@ class LatestWeightMessage extends StatelessWidget {
       String message = '';
 
       if (latestWeight < -35) {
-        message = 'Skinny';
+        message = '🧡: ★/5';
       } else if (latestWeight >= -35 && latestWeight < 35) {
-        message = 'Average';
+        message = '🧡: ★★/5';
       } else if (latestWeight >= 35 && latestWeight < 45) {
-        message = 'Regular';
+        message = '💚: ★★★/5';
       } else if (latestWeight >= 45 && latestWeight < 60) {
-        message = 'Good';
+        message = '💚: ★★★★/5';
       } else if (latestWeight >= 60 && latestWeight < 70) {
-        message = 'Overweight';
+        message = '💚: ★★★★★/5';
       } else if (latestWeight >= 70 && latestWeight < 90) {
-        message = 'Obese';
+        message = '❤️: ★★★/5';
       } else {
-        message = 'Extremely Obese';
+        message = '💛: ★★/5';
       }
 
       return Container(
         padding: EdgeInsets.all(10),
         decoration: BoxDecoration(
-          color: Colors.grey[300],
           borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Colors.grey[300]!,
+              Colors.grey[200]!,
+            ],
+            stops: [0.3, 0.9],
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.3),
+              spreadRadius: 2,
+              blurRadius: 10,
+              offset: Offset(4, 4),
+            ),
+          ],
+          border: Border.all(
+            color: Colors.grey[400]!,
+            width: 2,
+          ),
         ),
-        child: Text(
-          'Current Weight: ${latestWeight.toStringAsFixed(2)} kg\nCondition: $message',
-          style: TextStyle(fontSize: 16),
+        child: Center(
+          child: Text(
+            'Current Weight: ${latestWeight.toStringAsFixed(2)} kg\nHealth Rate: $message',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.black,
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
       );
     } else {
