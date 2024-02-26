@@ -285,7 +285,7 @@ class MyWorkoutPlanPage extends StatelessWidget {
         title: Text('My Workout Plan'),
       ),
       body: Center(
-        child: Text('This is your workout plan.'),
+        child: Text('This is your new workout plan.'),
       ),
     );
   }
