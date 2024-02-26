@@ -1,3 +1,5 @@
+import 'package:auth3/Screens/home.dart';
+import 'package:auth3/Screens/input.dart';
 import 'package:auth3/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'FitFlow App',
-      home: StartUp(), // Use the StartUp widget as the home
+      home: startUp(), // Use the StartUp widget as the home
     );
   }
 }
