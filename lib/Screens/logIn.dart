@@ -90,6 +90,20 @@ class _logInState extends State<logIn> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
+                    // Show loading indicator
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
+                    );
+                    // Wait for 1 or 2 seconds
+                    await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                    // Navigate to input page
+                    Navigator.pop(context);
                     try {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: _emailController.text,

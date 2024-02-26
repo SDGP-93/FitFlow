@@ -66,7 +66,20 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                     ],
                   ),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+                      // Wait for 1 or 2 seconds
+                      await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                      // Navigate to input page
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => logIn()), // Assuming logIn() is your login page
@@ -90,23 +103,36 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
               Center(
                 child: Container(
                   width: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(50.0),
-                  gradient: LinearGradient(
-                  colors: [Colors.black, Colors.black],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.teal,
-                      offset: Offset(0, 2),
-                      blurRadius: 3,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                    gradient: LinearGradient(
+                      colors: [Colors.black, Colors.black],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
-                  ],
-                ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.teal,
+                        offset: Offset(0, 2),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+                      // Wait for 1 or 2 seconds
+                      await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                      // Navigate to input page
+                      Navigator.pop(context);
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => signUp()), // Navigate to SignUp page

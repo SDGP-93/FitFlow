@@ -62,37 +62,121 @@ class _HomePageState extends State<homePage> {
                           crossAxisSpacing: 40.0,
                           shrinkWrap: true,
                           children: [
-                            buildButton(context, '', 'assets/db.png', () {
+                            buildButton(context, '', 'assets/db.png', () async {
+                              // Show loading indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+                              // Wait for 1 or 2 seconds
+                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                              // Navigate to input page
+                              Navigator.pop(context); // Close loading indicator
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => input()));
+                                context,
+                                MaterialPageRoute(builder: (context) => input()),
+                              );
                             }),
-                            buildButton(context, '', 'assets/cal3.png', () {
+                            buildButton(context, '', 'assets/cal3.png', () async {
+                              // Show loading indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+                              // Wait for 1 or 2 seconds
+                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                              // Navigate to input page
+                              Navigator.pop(context);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           StepCounterCircle()));
                             }),
-                            buildButton(context, '', 'assets/pro2.png', () {
+                            buildButton(context, '', 'assets/pro2.png', () async {
+                              // Show loading indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+                              // Wait for 1 or 2 seconds
+                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                              // Navigate to input page
+                              Navigator.pop(context);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           WeightInputPage()));
                             }),
-                            buildButton(context, '', 'assets/logo.png', () {
+                            buildButton(context, '', 'assets/logo.png', () async {
+                              // Show loading indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+                              // Wait for 1 or 2 seconds
+                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                              // Navigate to input page
+                              Navigator.pop(context);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           FitflowHistoryPage()));
                             }),
-                            buildButton(context, '', 'assets/set.png', () {
+                            buildButton(context, '', 'assets/set.png', () async {
+                              // Show loading indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+                              // Wait for 1 or 2 seconds
+                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                              // Navigate to input page
+                              Navigator.pop(context);
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
                             }),
-                            buildButton(context, '', 'assets/feed.png', () {
+                            buildButton(context, '', 'assets/feed.png', () async {
+                              // Show loading indicator
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
+                              // Wait for 1 or 2 seconds
+                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+                              // Navigate to input page
+                              Navigator.pop(context);
                               //Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage()));
                             }),
                           ],

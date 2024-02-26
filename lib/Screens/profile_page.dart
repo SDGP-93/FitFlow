@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'common_navbar.dart';
+
 class ProfilePage extends StatefulWidget {
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -30,6 +32,8 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: CommonNavBar(),
       body: Stack(
         children: [
           Container(
@@ -62,22 +66,14 @@ class _ProfilePageState extends State<ProfilePage> {
                           radius: 50,
                           child: Icon(Icons.person),
                         ),
-                        SizedBox(height: 30),
+                        SizedBox(height: 20),
                         Container(
                           padding: EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.cyan.withOpacity(0.7), Colors.black.withOpacity(0.5)],
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'User ID:',
+                                'MY USER ID',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white, // Changing the label color to white
@@ -86,20 +82,20 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                 decoration: BoxDecoration(
-                                  color: Colors.black, // Yellow background for user ID
+                                  color: Colors.white.withOpacity(0.3), // Yellow background for user ID
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Text(
                                   '${user.uid}',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.yellow,
+                                    color: Colors.teal,
                                   ),
                                 ),
                               ),
                               SizedBox(height: 10),
                               Text(
-                                'Email:',
+                                'EMAIL',
                                 style: TextStyle(
                                   fontSize: 18,
                                   color: Colors.white, // Changing the label color to white
@@ -108,21 +104,21 @@ class _ProfilePageState extends State<ProfilePage> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                                 decoration: BoxDecoration(
-                                  color: Colors.black, // Yellow background for email address
+                                  color: Colors.white.withOpacity(0.3), // Yellow background for email address
                                   borderRadius: BorderRadius.circular(5),
                                 ),
                                 child: Text(
                                   '${user.email}',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.yellow,
+                                    color: Colors.teal,
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 40),
+                        SizedBox(height: 60),
                         Container(
                           width: 170,
                           decoration: BoxDecoration(
@@ -134,7 +130,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.yellow,
+                                color: Colors.teal,
                                 offset: Offset(0, 2),
                                 blurRadius: 3,
                               ),
@@ -157,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'CHANGE AVATAR',
                               style: TextStyle(
-                                  color: Colors.cyan,
+                                  color: Colors.teal,
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   fontFamily: ''
@@ -231,7 +227,9 @@ class _ProfilePageState extends State<ProfilePage> {
         setState(() {
           _selectedImage = imagePath;
         });
-        Navigator.of(context).pop();
+
+        // Close the dialog and the common app bar
+        Navigator.popUntil(context, ModalRoute.withName('/'));
 
         // Store the selected image URL in Firestore
         if (_selectedImage != null) {

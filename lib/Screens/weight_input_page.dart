@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'common_navbar.dart';
 
 class WeightInputPage extends StatefulWidget {
-@override
-_WeightInputPageState createState() => _WeightInputPageState();
+  @override
+  _WeightInputPageState createState() => _WeightInputPageState();
 }
 
 class _WeightInputPageState extends State<WeightInputPage> {

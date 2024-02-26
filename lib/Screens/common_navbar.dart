@@ -37,7 +37,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
         actions: [
           Expanded(
             child: Align(
-              alignment: Alignment.centerRight,
+              alignment: Alignment.topRight,
               child: PopupMenuButton(
                 shape: null,
                 icon: Icon(

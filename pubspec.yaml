@@ -43,6 +43,9 @@ dependencies:
   image_picker: ^0.8.4+4
   video_player: ^2.2.12
   fl_chart: ^0.35.0
+  url_launcher: ^6.0.9
+  google_sign_in: ^5.2.1
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
@@ -99,3 +102,5 @@ flutter:
     - assets/lbgd.png
     - assets/appbarBG.png
     - assets/weightBg.png
+    - assets/aboutBg.png
+    - assets/usernameBg.png

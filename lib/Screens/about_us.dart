@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
 
 class FitflowHistoryPage extends StatelessWidget {
   @override
@@ -10,7 +11,7 @@ class FitflowHistoryPage extends StatelessWidget {
         children: [
           // Background Image
           Image.asset(
-            'assets/hfBG.jpg',
+            'assets/aboutBg.png',
             fit: BoxFit.cover,
           ),
           SingleChildScrollView(
@@ -26,20 +27,8 @@ class FitflowHistoryPage extends StatelessWidget {
                     width: MediaQuery.of(context).size.width * 0.5, // Adjust width as needed
                   ),
                 ),
-                SizedBox(height: 130),
-                // Description about Fitflow
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Text(
-                    '"ᴀᴘᴘʟɪᴄᴀᴛɪᴏɴ ᴅᴇꜱɪɢɴᴇᴅ ᴛᴏ ᴍᴇᴇᴛ ᴛʜᴇ ᴠᴀʀɪᴏᴜꜱ ɴᴇᴇᴅꜱ ᴏꜰ ᴄᴜꜱᴛᴏᴍᴇʀꜱ ʟᴏᴏᴋɪɴɢ ꜰᴏʀ ᴀ ᴘᴇʀꜱᴏɴᴀʟɪᴢᴇᴅ ᴀɴᴅ ᴇꜰꜰɪᴄɪᴇɴᴛ ᴡᴏʀᴋᴏᴜᴛ ᴘʟᴀɴ ᴇxᴘᴇʀɪᴇɴᴄᴇ ᴀɴᴅ ᴄᴏᴍʙᴀᴛ ᴏʙᴇꜱɪᴛʏ ʀᴇʟᴀᴛᴇᴅ ʜᴇᴀʟᴛʜ ᴘʀᴏʙʟᴇᴍꜱ"',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 50),
+
+                SizedBox(height: 250),
                 // Social Media Icons
                 GridView.count(
                   crossAxisCount: 2, // 2 items per row
@@ -48,10 +37,10 @@ class FitflowHistoryPage extends StatelessWidget {
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 10,
                   children: [
-                    buildSocialMediaIcon('assets/insta.png'),
-                    buildSocialMediaIcon('assets/fb.png'),
-                    buildSocialMediaIcon('assets/tele.png'),
-                    buildSocialMediaIcon('assets/x.png'),
+                    buildSocialMediaIcon('assets/insta.png', 'https://www.instagram.com/ecom__worldz/?igsh=M296ZGF5NnN4NzM5'),
+                    buildSocialMediaIcon('assets/fb.png', 'https://www.instagram.com/ecom__worldz/?igsh=M296ZGF5NnN4NzM5'),
+                    buildSocialMediaIcon('assets/tele.png', 'https://www.instagram.com/ecom__worldz/?igsh=M296ZGF5NnN4NzM5'),
+                    buildSocialMediaIcon('assets/x.png', 'https://www.instagram.com/ecom__worldz/?igsh=M296ZGF5NnN4NzM5'),
                   ],
                 ),
                 SizedBox(height: 10), // Adjust spacing between the grid and bottom edge
@@ -64,17 +53,15 @@ class FitflowHistoryPage extends StatelessWidget {
     );
   }
 
-  Widget buildSocialMediaIcon(String imagePath) {
+  Widget buildSocialMediaIcon(String imagePath, String url) {
     return GestureDetector(
       onTap: () {
-        // Handle social media icon tap
-        // TODO: Add functionality to open respective social media platform
+        launch(url); // Launch the provided URL when tapped
       },
       child: Container(
-        height: 10, // Adjust height as needed
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.transparent, // Make the background color transparent
+          color: Colors.transparent,
         ),
         child: Image.asset(
           imagePath,
@@ -84,8 +71,7 @@ class FitflowHistoryPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
+  }}
 
 void main() {
   runApp(MaterialApp(

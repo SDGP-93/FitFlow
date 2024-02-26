@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:video_player/video_player.dart';
 import 'common_navbar.dart';
 
 class UsernamePage extends StatefulWidget {
@@ -10,7 +9,6 @@ class UsernamePage extends StatefulWidget {
 }
 
 class _UsernamePageState extends State<UsernamePage> {
-  late VideoPlayerController _controller;
   late TextEditingController _usernameController;
   late String _currentUserName = 'username123'; // Default value
   late String _userId;
@@ -20,18 +18,12 @@ class _UsernamePageState extends State<UsernamePage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.asset('assets/splashBGV.mp4')
-      ..initialize().then((_) {
-        _controller.play();
-        _controller.setLooping(true);
-      });
     _usernameController = TextEditingController();
     _loadUserData();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     _usernameController.dispose();
     super.dispose();
   }
@@ -98,13 +90,11 @@ class _UsernamePageState extends State<UsernamePage> {
       appBar: CommonNavBar(),
       body: Stack(
         children: [
-          SizedBox.expand(
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: SizedBox(
-                width: _controller.value.size?.width ?? 0,
-                height: _controller.value.size?.height ?? 0,
-                child: VideoPlayer(_controller),
+          Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/usernameBg.png'), // Background image
+                fit: BoxFit.cover,
               ),
             ),
           ),
@@ -114,55 +104,54 @@ class _UsernamePageState extends State<UsernamePage> {
               children: [
                 Text(
                   _currentUserName,
-                  style:
-                  TextStyle(
-                      fontSize: 36,
-                      color: Colors.yellow
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.teal,
                   ),
                 ),
-                SizedBox(height: 50),
-            Container(
-              width: 170,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
-                gradient: LinearGradient(
-                  colors: [Colors.black, Colors.black],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.yellow,
-                    offset: Offset(0, 2),
-                    blurRadius: 3,
-                  ),
-                ],
-              ),
-                child: ElevatedButton(
-                  onPressed: () => _editNameDialog(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.transparent,
-                    elevation: 0,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 15,
-                      horizontal: 30,
+                SizedBox(height: 20),
+                Container(
+                  width: 170,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    gradient: LinearGradient(
+                      colors: [Colors.black, Colors.black],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
                     ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.teal,
+                        offset: Offset(0, 2),
+                        blurRadius: 3,
+                      ),
+                    ],
                   ),
-                  child: Text(
-                    'EDIT USERNAME',
-                    style: TextStyle(
-                        color: Colors.cyan,
+                  child: ElevatedButton(
+                    onPressed: () => _editNameDialog(context),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.transparent,
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 15,
+                        horizontal: 30,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                    child: Text(
+                      'EDIT USERNAME',
+                      style: TextStyle(
+                        color: Colors.teal,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        fontFamily: ''
+                        fontFamily: '',
+                      ),
                     ),
                   ),
                 ),
-            ),
               ],
             ),
           ),
