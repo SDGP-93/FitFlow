@@ -4,7 +4,7 @@ def calculate_bmr(age, weight, height, gender): #Calculate BMR Function
     elif gender.lower() == 'female':
         bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age) # Calculate female BMR Value
     else:
-        raise ValueError("Invalid gender! Please Enter 'male' or 'female'.") #Display a error message
+        raise ValueError("Invalid gender! Please Enter your gender as 'male' or 'female'.") #Display a error message
     return bmr
 
 def calculate_tdee(bmr, activity_level): # calculate TDEE Function
