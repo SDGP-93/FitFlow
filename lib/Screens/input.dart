@@ -69,12 +69,13 @@ class _UserInputPageState extends State<UserInputPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: CommonNavBar(),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/homeBg.png'),
+            image: AssetImage('assets/inputBg.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -83,15 +84,7 @@ class _UserInputPageState extends State<UserInputPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
-              Text(
-                'CREATE YOUR PLAN',
-                style: Theme.of(context).textTheme.headline6!.copyWith(
-                  fontSize: 24,
-                  color: Colors.teal, // Set text color to green
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 60),
               TextFormField(
                 controller: _ageController,
                 keyboardType: TextInputType.number,
@@ -138,7 +131,7 @@ class _UserInputPageState extends State<UserInputPage> {
                   filled: true,
                   fillColor: Colors.white70,
                 ),
-                style: TextStyle(color: Colors.black),
+                style: TextStyle(color: Colors.teal),
                 validator: (value) {
                   if (int.tryParse(value ?? '') == null) {
                     return 'Please enter a valid height';
@@ -146,45 +139,96 @@ class _UserInputPageState extends State<UserInputPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 60),
               Row(
                 children: [
-                  Text('Gender:', style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 10),
-                  DropdownButton<String>(
-                    value: _selectedGender,
-                    onChanged: (String? newValue) {
+                  GestureDetector(
+                    onTap: () {
                       setState(() {
-                        _selectedGender = newValue!;
+                        _selectedGender = 'Male';
                       });
                     },
-                    items: <String>['Male', 'Female'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value, style: TextStyle(color: Colors.black)),
-                      );
-                    }).toList(),
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: _selectedGender == 'Male' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(75), // Make it circular
+                      ),
+                      child: Image.asset('assets/maleBtn.png'),
+                    ),
+                  ),
+                  SizedBox(width: 50),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedGender = 'Female';
+                      });
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        color: _selectedGender == 'Female' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(75), // Make it circular
+                      ),
+                      child: Image.asset('assets/femaleBtn.png'),
+                    ),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 40),
               Row(
                 children: [
-                  Text('Level:', style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 10),
-                  DropdownButton<String>(
-                    value: _selectedLevelOption,
-                    onChanged: (String? newValue) {
+                  GestureDetector(
+                    onTap: () {
                       setState(() {
-                        _selectedLevelOption = newValue!;
+                        _selectedLevelOption = 'Beginner';
                       });
                     },
-                    items: <String>['Beginner', 'Mid', 'Pro'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value, style: TextStyle(color: Colors.black)),
-                      );
-                    }).toList(),
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: _selectedLevelOption == 'Beginner' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset('assets/begBtn.png'),
+                    ),
+                  ),
+                  SizedBox(width: 30),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedLevelOption = 'Mid';
+                      });
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: _selectedLevelOption == 'Mid' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset('assets/midBtn.png'),
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedLevelOption = 'Pro';
+                      });
+                    },
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        color: _selectedLevelOption == 'Pro' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset('assets/proBtn.png'),
+                    ),
                   ),
                 ],
               ),
@@ -241,7 +285,7 @@ class MyWorkoutPlanPage extends StatelessWidget {
         title: Text('My Workout Plan'),
       ),
       body: Center(
-        child: Text('This is your workout plan.'),
+        child: Text('This is your new workout plan.'),
       ),
     );
   }
