@@ -2,8 +2,8 @@ from joblib import load
 import numpy as np
 
 # Load the BMR models
-loaded_model_male_bmr = load('BMR_male.joblib')
-loaded_model_female_bmr = load('BMR_female.joblib')
+loaded_model_male_bmr = load('trained_model_male_bmr.joblib')
+loaded_model_female_bmr = load('trained_model_female_bmr.joblib')
 
 # Input gender
 gender = input("Enter gender (male/female): ")
@@ -24,6 +24,12 @@ else:
     exit()
 
 # Input activity level
+print("Activity Levels:")
+print("1 - Sedentary (little to no exercise)")
+print("2 - Lightly active (light exercise/sports 1-3 days a week)")
+print("3 - Moderately active (moderate exercise/sports 3-5 days a week)")
+print("4 - Very active (hard exercise/sports 6-7 days a week)")
+print("5 - Extra active (very hard exercise/sports & physical job or 2x training)")
 activity_lvl = int(input("Enter the number corresponding to your activity level: "))
 
 # Calculate TDEE based on activity level
