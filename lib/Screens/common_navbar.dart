@@ -1,23 +1,27 @@
+import 'package:auth3/Screens/Setting.dart';
 import 'package:auth3/Screens/profile_page.dart';
+import 'package:auth3/Screens/username_display_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'about_us.dart';
-/*import 'home.dart';
-import 'profile.dart';
-import 'settings.dart';*/
-import 'profile_page.dart';
+import 'package:auth3/Screens/about_us.dart';
+import 'package:auth3/Screens/home.dart';
+import 'package:auth3/Screens/logIn.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
+  final VoidCallback? onBackPressed;
+
+  const CommonNavBar({Key? key, this.onBackPressed}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
       child: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 1,
-        shadowColor: Colors.black,
+        backgroundColor: Colors.teal.withOpacity(0.5),
+        elevation: 3,
+        shadowColor: Colors.teal,
         toolbarHeight: 40,
         leading: Padding(
           padding: const EdgeInsets.all(0.0),
@@ -38,7 +42,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                 shape: null,
                 icon: Icon(
                   Icons.menu,
-                  color: Colors.yellow,
+                  color: Colors.black,
                   size: 40,
                 ),
                 color: Colors.transparent,
@@ -50,8 +54,8 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                         gradient: LinearGradient(
                           colors: [
                             Colors.black.withOpacity(0.75),
-                            Colors.cyan.withOpacity(0.75),
-                            Colors.black.withOpacity(0.75),
+                            Colors.teal.withOpacity(0.75),
+                            Colors.white.withOpacity(0.75),
                           ],
                           begin: Alignment.topCenter,
                           end: Alignment.bottomCenter,
@@ -85,10 +89,10 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                               );
                             },
                           ),
-                          buildMenuItem(context, 'Username', Icons.add_box_sharp, () {
+                          buildMenuItem(context, 'Username', Icons.ad_units_rounded, () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
+                              MaterialPageRoute(builder: (context) => UsernamePage()),
                             );
                           }),
                           buildMenuItem(context, 'Profile', Icons.account_circle, () {
@@ -100,13 +104,13 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                           buildMenuItem(context, 'Settings', Icons.settings, () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
+                              MaterialPageRoute(builder: (context) => SettingsPage()),
                             );
                           }),
                           buildMenuItem(context, 'Home', Icons.home, () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
+                              MaterialPageRoute(builder: (context) => homePage()),
                             );
                           }),
                           buildMenuItem(context, 'Fitflow', Icons.directions_run, () {
@@ -117,12 +121,20 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                           }),
                           SizedBox(height: 8),
                           IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: Icon(Icons.arrow_back, color: Colors.yellow),
+                            onPressed: onBackPressed,
+                            icon: Icon(Icons.check_circle_outline, color: Colors.teal),
                           ),
-
+                          SizedBox(height: 8),
+                          IconButton(
+                            onPressed: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => logIn()),
+                              );
+                            },
+                            icon: Icon(Icons.logout, color: Colors.red), // Logout button
+                          ),
                         ],
                       ),
                     ),
@@ -135,6 +147,15 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
         ],
+        // Add the background image to the app bar
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/appbarBG.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -161,7 +182,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
               title,
               style: TextStyle(color: Colors.white),
             ),
-            Icon(icon, color: Colors.yellow),
+            Icon(icon, color: Colors.white),
           ],
         ),
       ),
@@ -171,5 +192,4 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
-
 

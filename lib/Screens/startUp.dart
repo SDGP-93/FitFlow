@@ -38,7 +38,7 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
           // Background Image
           Positioned.fill(
             child: Image.asset(
-              'assets/welcomeBGF.jpg', // Your background image path
+              'assets/welcomeBGF2.png', // Your background image path
               fit: BoxFit.cover,
             ),
           ),
@@ -46,38 +46,25 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SlideTransition(
-                position: _animation,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    'Welcome to',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 50,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              SlideTransition(
-                position: _animation,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 40.0),
-                  child: Text(
-                    'FitFlow',
-                    style: TextStyle(
-                      color: Colors.cyan,
-                      fontSize: 70,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 450),
               Center(
                 child: Container(
-                  width: 200,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50.0),
+                    gradient: LinearGradient(
+                      colors: [Colors.black, Colors.black],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.teal,
+                        offset: Offset(0, 2),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -86,13 +73,11 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
-                      elevation: 4,
-                      shadowColor: Colors.cyan,
                     ),
                     child: Text(
                       'Log In',
@@ -101,10 +86,25 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               Center(
                 child: Container(
-                  width: 200,
+                  width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50.0),
+                  gradient: LinearGradient(
+                  colors: [Colors.black, Colors.black],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.teal,
+                      offset: Offset(0, 2),
+                      blurRadius: 3,
+                    ),
+                  ],
+                ),
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(
@@ -113,13 +113,11 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.white,
-                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.black,
+                      foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(50.0),
                       ),
-                      elevation: 4,
-                      shadowColor: Colors.cyan,
                     ),
                     child: Text(
                       'Sign Up',

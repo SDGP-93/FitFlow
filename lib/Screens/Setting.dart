@@ -1,17 +1,5 @@
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SettingsPage(),
-    );
-  }
-}
+import 'common_navbar.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -25,64 +13,75 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-      ),
-      backgroundColor: Colors.black, // Set background color to black
-      body: ListView(
-        children: <Widget>[
-          ListTile(
-            title: Text(
-              'Notifications',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Switch(
-              value: _notificationsEnabled,
-              onChanged: (bool value) {
-                setState(() {
-                  _notificationsEnabled = value;
-                });
-                // Handle notification state changes
-              },
+      extendBodyBehindAppBar: true, // Set this to true to extend the body behind the app bar
+      appBar: CommonNavBar(),
+      body: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              'assets/homeBG2.jpg',
+              fit: BoxFit.cover,
             ),
           ),
-          ListTile(
-            title: Text(
-              'Dark Mode',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Switch(
-              value: _darkModeEnabled,
-              onChanged: (bool value) {
-                setState(() {
-                  _darkModeEnabled = value;
-                });
-                // Handle dark mode state changes
-              },
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Language',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Icon(Icons.arrow_forward_ios, color: Colors.white), // Set icon color to white
-            onTap: () {
-              // Navigate to language settings page or show a language picker dialog
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Feedback',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Icon(Icons.arrow_forward_ios, color: Colors.white), // Set icon color to white
-            onTap: () {
-              // Navigate to feedback page
-            },
+          // Settings Content
+          ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text(
+                  'Notifications',
+                  style: TextStyle(color: Colors.white), // Set text color to white
+                ),
+                trailing: Switch(
+                  value: _notificationsEnabled,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _notificationsEnabled = value;
+                    });
+                    // Handle notification state changes
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Dark Mode',
+                  style: TextStyle(color: Colors.white), // Set text color to white
+                ),
+                trailing: Switch(
+                  value: _darkModeEnabled,
+                  onChanged: (bool value) {
+                    setState(() {
+                      _darkModeEnabled = value;
+                    });
+                    // Handle dark mode state changes
+                  },
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'Language',
+                  style: TextStyle(color: Colors.white), // Set text color to white
+                ),
+                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white), // Set icon color to white
+                onTap: () {
+                  // Navigate to language settings page or show a language picker dialog
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Feedback',
+                  style: TextStyle(color: Colors.white), // Set text color to white
+                ),
+                trailing: Icon(Icons.arrow_forward_ios, color: Colors.white), // Set icon color to white
+                onTap: () {
+                  // Navigate to feedback page
+                },
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
+
