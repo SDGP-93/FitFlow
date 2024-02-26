@@ -1,84 +1,113 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(FitFlowApp());
 }
 
-class MyApp extends StatelessWidget {
+class DarkThemeProvider with ChangeNotifier {
+  bool _isDarkMode = false;
+
+  bool get isDarkMode => _isDarkMode;
+
+  void toggleDarkMode(bool newValue) {
+    _isDarkMode = newValue;
+    notifyListeners();
+  }
+}
+
+class FitFlowApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: SettingsPage(),
+    return ChangeNotifierProvider(
+      create: (_) => DarkThemeProvider(),
+      child: Consumer<DarkThemeProvider>(
+        builder: (context, themeProvider, child) {
+          return MaterialApp(
+            title: 'FitFlow',
+            theme: themeProvider.isDarkMode
+                ? ThemeData.dark()
+                : ThemeData.light(),
+            home: SettingsPage(),
+          );
+        },
+      ),
     );
   }
 }
 
-class SettingsPage extends StatefulWidget {
-  @override
-  _SettingsPageState createState() => _SettingsPageState();
-}
-
-class _SettingsPageState extends State<SettingsPage> {
-  bool _notificationsEnabled = true;
-  bool _darkModeEnabled = false;
-
+class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text('Setting'),
       ),
-      backgroundColor: Colors.black, // Set background color to black
       body: ListView(
-        children: <Widget>[
+        children: [
           ListTile(
-            title: Text(
-              'Notifications',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Switch(
-              value: _notificationsEnabled,
-              onChanged: (bool value) {
-                setState(() {
-                  _notificationsEnabled = value;
-                });
-                // Handle notification state changes
+            title: Text('Dark Mode'),
+            trailing: Consumer<DarkThemeProvider>(
+              builder: (context, themeProvider, child) {
+                return Switch(
+                  value: themeProvider.isDarkMode,
+                  onChanged: (value) {
+                    themeProvider.toggleDarkMode(value);
+                  },
+                );
               },
             ),
           ),
           ListTile(
-            title: Text(
-              'Dark Mode',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Switch(
-              value: _darkModeEnabled,
-              onChanged: (bool value) {
-                setState(() {
-                  _darkModeEnabled = value;
-                });
-                // Handle dark mode state changes
-              },
-            ),
-          ),
-          ListTile(
-            title: Text(
-              'Language',
-              style: TextStyle(color: Colors.white), // Set text color to white
-            ),
-            trailing: Icon(Icons.arrow_forward_ios, color: Colors.white), // Set icon color to white
+            title: Text('Feedback'),
             onTap: () {
-              // Navigate to language settings page or show a language picker dialog
+              // Implement feedback logic
+            },
+          ),
+          ListTile(
+            title: Text('Change Password'),
+            onTap: () {
+              // Implement change password logic
+            },
+          ),
+          ListTile(
+            title: Text('Logout'),
+            onTap: () {
+              // Implement logout logic
+              Navigator.pop(context); // Navigate back to previous screen
             },
           ),
           ListTile(
             title: Text(
-              'Feedback',
-              style: TextStyle(color: Colors.white), // Set text color to white
+              'Delete Account',
+              style: TextStyle(color: Colors.red),
             ),
-            trailing: Icon(Icons.arrow_forward_ios, color: Colors.white), // Set icon color to white
             onTap: () {
-              // Navigate to feedback page
+              // Implement delete account logic
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Delete Account"),
+                    content: Text("Are you sure you want to delete your account?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          // Implement delete account logic here
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text("Delete"),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],
