@@ -18,7 +18,7 @@ def calculate_tdee(bmr, activity_level): # calculate TDEE Function
     if activity_level.lower() in activity_multipliers:
         return bmr * activity_multipliers[activity_level.lower()]
     else:
-        raise ValueError("Invalid activity level! Please enter sedentary, lightly active, moderately active, very active or extra active correctly.")
+        raise ValueError("Invalid activity level! Please enter correctly.")
 
 def main(): #main function
     # Get user inputs
