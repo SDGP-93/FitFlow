@@ -199,16 +199,37 @@ class _ProfilePageState extends State<ProfilePage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Select Image'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _imageOptionTile('assets/avatar1.jpg'),
-            _imageOptionTile('assets/avatar2.jpg'),
-            _imageOptionTile('assets/avatar3.jpg'),
-            _imageOptionTile('assets/avatar4.jpg'),
-            _imageOptionTile('assets/avatar5.jpg'),
-          ],
+        title: Text('Select Avatar'),
+        content: SizedBox(
+          width: 350, // Adjust width as needed
+          height: 400, // Adjust height as needed
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _imageOptionTile('assets/avatar/avatar1.jpg'),
+                _imageOptionTile('assets/avatar/avatar2.jpg'),
+                _imageOptionTile('assets/avatar/avatar3.jpg'),
+                _imageOptionTile('assets/avatar/avatar4.jpg'),
+                _imageOptionTile('assets/avatar/avatar5.png'),
+                _imageOptionTile('assets/avatar/avatar6.png'),
+                _imageOptionTile('assets/avatar/avatar7.jpg'),
+                _imageOptionTile('assets/avatar/avatar8.png'),
+                _imageOptionTile('assets/avatar/avatar9.jpg'),
+                _imageOptionTile('assets/avatar/avatar10.jpg'),
+                _imageOptionTile('assets/avatar/avatar11.jpg'),
+                _imageOptionTile('assets/avatar/avatar12.jpg'),
+                _imageOptionTile('assets/avatar/avatar13.jpg'),
+                _imageOptionTile('assets/avatar/avatar14.jpg'),
+                _imageOptionTile('assets/avatar/avatar15.jpg'),
+                _imageOptionTile('assets/avatar/avatar16.jpg'),
+                _imageOptionTile('assets/avatar/avatar17.jpg'),
+                _imageOptionTile('assets/avatar/avatar18.jpg'),
+                _imageOptionTile('assets/avatar/avatar19.jpg'),
+                _imageOptionTile('assets/avatar/avatar20.jpg'),
+              ],
+            ),
+          ),
         ),
       ),
     );

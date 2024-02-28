@@ -104,7 +104,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                           buildMenuItem(context, 'Settings', Icons.settings, () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => SettingsPage()),
+                              MaterialPageRoute(builder: (context) => FitFlowApp()),
                             );
                           }),
                           buildMenuItem(context, 'Home', Icons.home, () {
