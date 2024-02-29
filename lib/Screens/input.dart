@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -187,8 +188,8 @@ class _UserInputPageState extends State<UserInputPage> {
                       });
                     },
                     child: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: _selectedLevelOption == 'Beginner' ? Colors.teal : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
@@ -196,7 +197,7 @@ class _UserInputPageState extends State<UserInputPage> {
                       child: Image.asset('assets/begBtn.png'),
                     ),
                   ),
-                  SizedBox(width: 30),
+                  SizedBox(width: 0),
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -204,8 +205,8 @@ class _UserInputPageState extends State<UserInputPage> {
                       });
                     },
                     child: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: _selectedLevelOption == 'Mid' ? Colors.teal : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
@@ -213,7 +214,7 @@ class _UserInputPageState extends State<UserInputPage> {
                       child: Image.asset('assets/midBtn.png'),
                     ),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 0),
                   GestureDetector(
                     onTap: () {
                       setState(() {
@@ -221,8 +222,8 @@ class _UserInputPageState extends State<UserInputPage> {
                       });
                     },
                     child: Container(
-                      width: 100,
-                      height: 100,
+                      width: 70,
+                      height: 70,
                       decoration: BoxDecoration(
                         color: _selectedLevelOption == 'Pro' ? Colors.teal : Colors.transparent,
                         borderRadius: BorderRadius.circular(10),
@@ -230,10 +231,73 @@ class _UserInputPageState extends State<UserInputPage> {
                       child: Image.asset('assets/proBtn.png'),
                     ),
                   ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedLevelOption = 'liv';
+                      });
+                    },
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: _selectedLevelOption == 'liv' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset('assets/midBtn.png'),
+                    ),
+                  ),
+                  SizedBox(width: 00),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedLevelOption = 'kro';
+                      });
+                    },
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      decoration: BoxDecoration(
+                        color: _selectedLevelOption == 'kro' ? Colors.teal : Colors.transparent,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Image.asset('assets/midBtn.png'),
+                    ),
+                  ),
                 ],
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
+              SizedBox(height: 25),
+          Center(
+          child: Container(
+            width: 170,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(30.0),
+              gradient: LinearGradient(
+                colors: [Colors.black, Colors.black],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.teal,
+                  offset: Offset(0, 2),
+                  blurRadius: 3,
+                ),
+              ],
+            ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: Colors.transparent,
+                  elevation: 0,
+                  padding: EdgeInsets.symmetric(
+                    vertical: 15,
+                    horizontal: 30,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
                 onPressed: _isButtonDisabled ? null : () async {
                   // Prepare data to be stored in Firestore
                   Map<String, dynamic> inputData = {
@@ -267,8 +331,17 @@ class _UserInputPageState extends State<UserInputPage> {
                     }
                   }
                 },
-                child: Text('Submit'),
+                child: Text('Submit',
+                  style: TextStyle(
+                      color: Colors.teal,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: ''
+                  ),
+                ),
               ),
+              ),
+          ),
             ],
           ),
         ),

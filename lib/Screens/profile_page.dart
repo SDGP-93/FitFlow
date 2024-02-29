@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 horizontal: 30,
                               ),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(5),
+                                borderRadius: BorderRadius.circular(30),
                               ),
                             ),
                             child: Text(
