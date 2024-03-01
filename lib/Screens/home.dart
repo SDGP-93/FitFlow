@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'common_navbar.dart';
 import 'input.dart';
 import 'stepsCounter.dart';
@@ -21,12 +22,16 @@ class _HomePageState extends State<homePage> {
     });
   }
 
-  void refreshPage(BuildContext context) {
-    Navigator.pop(context); // Close the current page
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => homePage()),
-    );
+  @override
+  void initState() {
+    super.initState();
+    // Disable back button press for Android
+    SystemChannels.platform.setMethodCallHandler((call) async {
+      if (call.method == 'SystemNavigator.pop') {
+        return false;
+      }
+      return true;
+    });
   }
 
   @override
@@ -35,12 +40,12 @@ class _HomePageState extends State<homePage> {
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: CommonNavBar(onBackPressed: () => refreshPage(context)),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: _isDarkMode ? darkGradient : lightGradient,
-          ),
-          child: Stack(
+          appBar: CommonNavBar(),
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: _isDarkMode ? darkGradient : lightGradient,
+            ),
+            child: Stack(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
@@ -101,7 +106,7 @@ class _HomePageState extends State<homePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          StepCounterCircle()));
+                                          StepCountPage()));
                             }),
                             buildButton(context, '', 'assets/pro2.png', () async {
                               // Show loading indicator
@@ -263,6 +268,7 @@ class _HomePageState extends State<homePage> {
           ),
         ),
       ),
+
     );
   }
 

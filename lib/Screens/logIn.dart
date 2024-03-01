@@ -12,6 +12,7 @@ class logIn extends StatefulWidget {
 }
 
 class _logInState extends State<logIn> {
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   String _errorMessage = ''; // Added variable for error message
@@ -90,29 +91,16 @@ class _logInState extends State<logIn> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    // Show loading indicator
-                    showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    );
-                    // Wait for 1 or 2 seconds
-                    await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                    // Navigate to input page
-                    Navigator.pop(context);
                     try {
                       await FirebaseAuth.instance.signInWithEmailAndPassword(
                         email: _emailController.text,
                         password: _passwordController.text,
                       );
 
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => homePage()),
+                            (route) => false,
                       );
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'wrong-password') {

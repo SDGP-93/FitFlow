@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -87,25 +88,7 @@ class SettingsPage extends StatelessWidget {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Delete Account"),
-                    content: Text("Are you sure you want to delete your account?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
-                        },
-                        child: Text("Cancel"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          // Implement delete account logic here
-                          Navigator.of(context).pop(); // Close the dialog
-                        },
-                        child: Text("Delete"),
-                      ),
-                    ],
-                  );
+                  return DeleteAccountDialog();
                 },
               );
             },
@@ -113,5 +96,91 @@ class SettingsPage extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class DeleteAccountDialog extends StatefulWidget {
+  @override
+  _DeleteAccountDialogState createState() => _DeleteAccountDialogState();
+}
+
+class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text("Delete Account"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Are you sure you want to delete your account?"),
+          SizedBox(height: 10),
+          TextField(
+            controller: _emailController,
+            decoration: InputDecoration(labelText: 'Enter your email'),
+          ),
+          SizedBox(height: 10),
+          TextField(
+            controller: _passwordController,
+            obscureText: true,
+            decoration: InputDecoration(labelText: 'Enter your password'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+          child: Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () async {
+            // Validate email and password before proceeding
+            if (_emailController.text.trim().isEmpty || _passwordController.text.isEmpty) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Please enter your email and password.'),
+                ),
+              );
+              return;
+            }
+
+            // Delete account only if email matches
+            try {
+              User? user = FirebaseAuth.instance.currentUser;
+              if (user != null) {
+                // Re-authenticate user to confirm deletion
+                AuthCredential credential = EmailAuthProvider.credential(email: _emailController.text.trim(), password: _passwordController.text);
+                await user.reauthenticateWithCredential(credential);
+
+                // Delete account
+                await user.delete();
+
+                // Navigate to startup page and refresh
+                Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+              }
+            } catch (error) {
+              print('Error deleting account: $error');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Failed to delete account. Please try again.'),
+                ),
+              );
+            }
+          },
+          child: Text("Delete"),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 }

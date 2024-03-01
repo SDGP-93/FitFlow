@@ -78,11 +78,10 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                       );
                       // Wait for 1 or 2 seconds
                       await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                      // Navigate to input page
-                      Navigator.pop(context);
-                      Navigator.push(
+                      // Navigate to login page and close the startup page
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => logIn()), // Assuming logIn() is your login page
+                        MaterialPageRoute(builder: (context) => logIn()),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -131,11 +130,10 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                       );
                       // Wait for 1 or 2 seconds
                       await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                      // Navigate to input page
-                      Navigator.pop(context);
-                      Navigator.push(
+                      // Navigate to signup page and close the startup page
+                      Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => signUp()), // Navigate to SignUp page
+                        MaterialPageRoute(builder: (context) => signUp()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

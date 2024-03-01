@@ -16,9 +16,14 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
-      child: AppBar(
+    return WillPopScope(
+        onWillPop: () async {
+      // Navigate to the home page when the back button is pressed
+      Navigator.pushReplacementNamed(context, 'home');
+      return false; // Prevents default back button behavior
+    },
+    child: Scaffold(
+    appBar: AppBar(
         backgroundColor: Colors.teal.withOpacity(0.5),
         elevation: 3,
         shadowColor: Colors.teal,
@@ -127,10 +132,32 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                           SizedBox(height: 8),
                           IconButton(
                             onPressed: () {
-                              FirebaseAuth.instance.signOut();
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => logIn()),
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Confirm Logout"),
+                                    content: Text("Are you sure you want to log out?"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: Text("Cancel"),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          FirebaseAuth.instance.signOut();
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => logIn()),
+                                          );
+                                        },
+                                        child: Text("Logout"),
+                                      ),
+                                    ],
+                                  );
+                                },
                               );
                             },
                             icon: Icon(Icons.logout, color: Colors.red), // Logout button
@@ -157,6 +184,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
       ),
+    ),
     );
   }
 

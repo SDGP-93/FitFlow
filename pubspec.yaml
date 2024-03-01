@@ -46,6 +46,7 @@ dependencies:
   url_launcher: ^6.0.9
   google_sign_in: ^5.2.1
   provider: ^5.0.0
+  sensors: ^2.0.3
 
 dev_dependencies:
   flutter_test:
