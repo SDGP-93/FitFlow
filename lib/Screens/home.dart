@@ -40,12 +40,12 @@ class _HomePageState extends State<homePage> {
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
         extendBodyBehindAppBar: true,
-          appBar: CommonNavBar(),
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: _isDarkMode ? darkGradient : lightGradient,
-            ),
-            child: Stack(
+        appBar: CommonNavBar(),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: _isDarkMode ? darkGradient : lightGradient,
+          ),
+          child: Stack(
             children: [
               Align(
                 alignment: Alignment.centerLeft,
@@ -194,7 +194,7 @@ class _HomePageState extends State<homePage> {
                             'SORE NOW.\nSTRONG FOREVER.',
                             style: TextStyle(
                               fontSize: 25,
-                              color: Colors.white24,
+                              color: _isDarkMode ? Colors.tealAccent : Colors.white24,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -228,11 +228,11 @@ class _HomePageState extends State<homePage> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 12),
                                 decoration: BoxDecoration(
-                                  color: Colors.teal,
+                                  color: _isDarkMode ? Colors.black : Colors.teal,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black, // Adjust shadow color if needed
+                                      color: _isDarkMode ? Colors.tealAccent : Colors.black, // Adjust shadow color if needed
                                       spreadRadius: 0,
                                       blurRadius: 3,
                                       offset: Offset(0, 4),
@@ -242,7 +242,7 @@ class _HomePageState extends State<homePage> {
                                 child: Text(
                                   '${username ?? 'Not available'}',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: _isDarkMode ? Colors.tealAccent : Colors.white,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -276,7 +276,7 @@ class _HomePageState extends State<homePage> {
       VoidCallback onTap) {
     return AnimatedContainer(
       duration: Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+      curve: Curves.bounceIn,
       transform: Matrix4.identity()..scale(1.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -285,7 +285,16 @@ class _HomePageState extends State<homePage> {
           image: AssetImage(backgroundImage),
           fit: BoxFit.cover,
         ),
-        boxShadow: [
+        boxShadow: _isDarkMode
+            ? [
+          BoxShadow(
+            color: Colors.tealAccent,
+            spreadRadius: 1.5,
+            blurRadius: 10.0,
+            offset: Offset(0, 0),
+          ),
+        ]
+            : [
           BoxShadow(
             color: Colors.teal,
             spreadRadius: 0.5,

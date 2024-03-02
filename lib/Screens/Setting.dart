@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'home.dart';
+
 void main() {
   runApp(FitFlowApp());
 }
@@ -42,7 +44,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Setting'),
+        title: Text('Settings'),
       ),
       body: ListView(
         children: [
@@ -95,6 +97,17 @@ class SettingsPage extends StatelessWidget {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Navigate to the home page
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => homePage()),
+          );
+        },
+        child: Icon(Icons.check),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );
   }
 }

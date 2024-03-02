@@ -47,7 +47,7 @@ dependencies:
   google_sign_in: ^5.2.1
   provider: ^5.0.0
   sensors: ^2.0.3
-  geolocator: ^11.0.0
+  geolocator: ^7.6.2
 
 dev_dependencies:
   flutter_test:
@@ -127,3 +127,4 @@ flutter:
     - assets/avatar/avatar18.jpg
     - assets/avatar/avatar19.jpg
     - assets/avatar/avatar20.jpg
+    - assets/stepBg.jpg
