@@ -1,24 +1,32 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:sensors/sensors.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: StepCountPage(),
   ));
 }
 
 class StepCountPage extends StatefulWidget {
+  const StepCountPage({super.key});
+
   @override
   _StepCountPageState createState() => _StepCountPageState();
 }
 
 class _StepCountPageState extends State<StepCountPage> {
   int _stepCount = 0;
+  double _caloriesBurned = 0;
   bool _isListening = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
+  StreamSubscription<Position>? _positionSubscription;
   List<double> _accelerometerValues = [0, 0, 0];
+  double _previousMagnitude = 0;
+  final double _threshold = 11.0; // can Adjust 
+  bool _isStepDetected = false;
 
   @override
   void initState() {
@@ -40,6 +48,10 @@ class _StepCountPageState extends State<StepCountPage> {
       });
     });
 
+    _positionSubscription = Geolocator.getPositionStream().listen((Position position) {
+      //  GPS data  
+    });
+
     setState(() {
       _isListening = true;
     });
@@ -47,6 +59,7 @@ class _StepCountPageState extends State<StepCountPage> {
 
   void _stopListening() {
     _accelerometerSubscription?.cancel();
+    _positionSubscription?.cancel();
 
     setState(() {
       _isListening = false;
@@ -55,19 +68,31 @@ class _StepCountPageState extends State<StepCountPage> {
 
   void _checkForStep() {
     final double currentAccelerationMagnitude = _accelerometerValues.fold(0, (previous, current) => previous + current.abs());
-    final double threshold = 11.0; // Adjust this threshold according to your device and sensitivity
-    if (currentAccelerationMagnitude > threshold) {
+    
+    if (_isStepDetected && currentAccelerationMagnitude < _threshold * 0.8) {
+      _isStepDetected = false;
+    }
+
+    if (!_isStepDetected && currentAccelerationMagnitude > _threshold * 1.2 && _previousMagnitude < _threshold * 0.8) {
+      _isStepDetected = true;
       setState(() {
         _stepCount++;
+        _caloriesBurned = _calculateCalories(_stepCount);
       });
     }
+
+    _previousMagnitude = currentAccelerationMagnitude;
+  }
+
+  double _calculateCalories(int steps) {
+    return steps * 0.04;//  assume 0.04 calories burned per step
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Step Count'),
+        title: const Text('Step Count'),
       ),
       body: Center(
         child: Column(
@@ -75,9 +100,13 @@ class _StepCountPageState extends State<StepCountPage> {
           children: <Widget>[
             Text(
               'Step Count: $_stepCount',
-              style: TextStyle(fontSize: 24),
+              style: const TextStyle(fontSize: 24),
             ),
-            SizedBox(height: 20),
+            Text(
+              'Calories Burned: ${_caloriesBurned.toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: _isListening ? _stopListening : _startListening,
               child: Text(_isListening ? 'Stop' : 'Start'),
