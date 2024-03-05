@@ -1,9 +1,13 @@
 from joblib import load
 import numpy as np
 
+
 # Load the BMR models
 loaded_model_male_bmr = load('trained_model_male_bmr.joblib')
 loaded_model_female_bmr = load('trained_model_female_bmr.joblib')
+
+
+
 
 # Input gender
 gender = input("Enter gender (male/female): ")
