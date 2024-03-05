@@ -11,6 +11,7 @@ warnings.filterwarnings("ignore", category=UserWarning)
 # Load dataset
 dataset = pd.read_csv("C:/Users/User/Desktop/FitFlow/ML/ML/WorkoutData.csv")
 
+
 # Data Preprocessing
 # Drop rows with missing values
 dataset.dropna(inplace=True)
