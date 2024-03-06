@@ -245,6 +245,9 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
       title: Text(imagePath.split('/').last),
       onTap: () async {
+        // Check if the widget is mounted before calling setState
+        if (!mounted) return;
+
         setState(() {
           _selectedImage = imagePath;
         });

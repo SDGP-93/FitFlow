@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'common_navbar.dart';
 
 void main() {
@@ -430,7 +429,7 @@ class MyWorkoutPlanPage extends StatelessWidget {
               SizedBox(height: 120),
               Center(
                 child: Container(
-                  width: 180,
+                  width: 190,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     gradient: LinearGradient(
@@ -460,7 +459,10 @@ class MyWorkoutPlanPage extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      // Add your logic to generate workout plan
+                      /*Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => MyApp()),
+                      );*/
                     },
                     child: Text(
                       'Generate Workout Plan',
