@@ -9,7 +9,8 @@ import warnings
 warnings.filterwarnings("ignore", category=UserWarning)
 
 # Load dataset
-dataset = pd.read_csv("C:/Users/File/Desktop/workouts model/workout model/WorkoutData.csv")
+dataset = pd.read_csv("C:/Users/User/Desktop/FitFlow/ML/ML/WorkoutData.csv")
+
 
 # Data Preprocessing
 # Drop rows with missing values
