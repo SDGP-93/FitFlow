@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
@@ -121,6 +122,29 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
 
+  Future<void> deleteUserData(String userId) async {
+    try {
+      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      final collections = ["InputSubmit", "StepCount", "profiles", "users", "info"];
+
+      for (String collectionName in collections) {
+        final collectionRef = firestore.collection(collectionName);
+        final querySnapshot = await collectionRef.where('userId', isEqualTo: userId).get();
+
+        for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          // Remove the user's ID from the document
+          final data = documentSnapshot.data() as Map<String, dynamic>;
+          data.remove('userId');
+
+          // Update the document without the user's ID
+          await collectionRef.doc(documentSnapshot.id).set(data);
+        }
+      }
+    } catch (error) {
+      print('Error deleting user data: $error');
+      throw error; // Rethrow the error for handling in the calling code
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -161,6 +185,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
               return;
             }
 
+
             // Delete account only if email matches
             try {
               User? user = FirebaseAuth.instance.currentUser;
@@ -168,6 +193,9 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                 // Re-authenticate user to confirm deletion
                 AuthCredential credential = EmailAuthProvider.credential(email: _emailController.text.trim(), password: _passwordController.text);
                 await user.reauthenticateWithCredential(credential);
+
+                // Delete user's collections
+                await deleteUserData(user.uid);
 
                 // Delete account
                 await user.delete();
