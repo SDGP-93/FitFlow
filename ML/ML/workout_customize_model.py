@@ -58,24 +58,23 @@ def generate_workout_plan(calories_burned, workout_plan_number):
     calorie_difference = calories_burned - predicted_calories
 
     # Adjust sets and reps based on the calorie difference
+    adjusted_sets = [int(sets[i] + calorie_difference.item() // 100) for i in range(len(sets))]
+    adjusted_reps = [int(reps[i] + calorie_difference.item() // 50) for i in range(len(reps))]
 
-    # adds 1 set for every 100 calories difference between the desired and predicted calories burned
-    adjusted_sets = [sets[i] + int(calorie_difference.item() // 100) for i in range(len(sets))]
-    #adds 1 rep for every 50 calories difference between the desired and predicted calories burned.
-    adjusted_reps = [reps[i] + int(calorie_difference.item() // 50) for i in range(len(reps))]
-
-
-    # Construct the customized workout plan
-    workout_plan = {
-        "Workout Plan Number": workout_plan_number,
-        "Exercises": exercises,
-        "Descriptions": descriptions,
-        "Executes": executes,
+    # Construct the customized workout plan as a DataFrame
+    workout_plan_df = pd.DataFrame({
+        "Exercise": exercises,
         "Reps": adjusted_reps,
         "Sets": adjusted_sets
-    }
+    })
 
-    return workout_plan
+    return workout_plan_df
+
+
+# Function to print workout plan
+def print_workout_plan(workout_plan_df, workout_plan_number):
+    print(f"\nGenerated Workout Plan Number: {workout_plan_number}\n")
+    print(workout_plan_df.to_string(index=False))
 
 
 def main():
@@ -89,17 +88,12 @@ def main():
         if choice == '1':
             try:
                 calories_burned = int(input("Enter total calories burned by steps counter: "))
-                workout_plan_number = input("Enter the number of the workout plan (e.g., '2plan'): ")
+                workout_plan_number = input("Enter the number of the workout plan (e.g., '1plan'): ")
                 workout_plan = generate_workout_plan(calories_burned, workout_plan_number)
-                print("\nGenerated Workout Plan:")
-                print("Workout Plan Number:", workout_plan['Workout Plan Number'])
-                print("Exercises:")
-                for i, exercise in enumerate(workout_plan['Exercises']):
-                    print(f"{i + 1}. {exercise}")
-                    print("Description:", workout_plan['Descriptions'][i])
-                    print("Execute x1:", workout_plan['Executes'][i])
-                    print("Reps:", workout_plan['Reps'][i])
-                    print("Sets:", workout_plan['Sets'][i])
+                
+                print("\n>>>>>>Generated Workout Plan<<<<<<")
+                print_workout_plan(workout_plan, workout_plan_number)
+                
             except ValueError:
                 print("Please enter valid integers for calories burned.")
         elif choice == '2':
