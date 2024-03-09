@@ -42,31 +42,27 @@ def generate_workout_plan(calories_burned, workout_plan_number):
     model = joblib.load('workout_calories_model.pkl')
 
     # Get exercises data for the specified workout plan number from the dataset
-    plan_data = dataset[dataset['PN'] == workout_plan_number]
+    plan_data = dataset[dataset['PN'] == workout_plan_number].copy()
 
-    # Extract information for each exercise
-    exercises = plan_data['Exercise'].tolist()
-    descriptions = plan_data['Description'].tolist()
-    executes = plan_data['Execute x1'].tolist()
-    reps = plan_data['Reps'].tolist()
-    sets = plan_data['Sets'].tolist()
+    # Predict calories burned for each exercise
+    plan_data['Predicted_Calories'] = model.predict(plan_data[['Sets', 'Reps']])
 
-    # Predict the number of sets and reps based on the input calories
-    predicted_calories = model.predict([[sets[0], reps[0]]])
+ # Calculate adjusted sets and reps based on the difference between reported and predicted calories burned
+    # Adjusted sets and reps are reduced if reported calories burned are higher than predicted
+    # Calculate adjusted sets and reps based on calorie difference
+    plan_data['Adjusted_Sets'] = plan_data['Sets'] - ((calories_burned - plan_data['Predicted_Calories']) // 100)
+    plan_data['Adjusted_Reps'] = plan_data['Reps'] - ((calories_burned - plan_data['Predicted_Calories']) // 50)
 
-    # Calculate the difference between predicted and input calories
-    calorie_difference = calories_burned - predicted_calories
+    # Round adjusted sets and reps to nearest integer
+    plan_data['Adjusted_Sets'] = plan_data['Adjusted_Sets'].astype(int)
+    plan_data['Adjusted_Reps'] = plan_data['Adjusted_Reps'].astype(int)
 
-    # Adjust sets and reps based on the calorie difference
-    adjusted_sets = [int(sets[i] + calorie_difference.item() // 100) for i in range(len(sets))]
-    adjusted_reps = [int(reps[i] + calorie_difference.item() // 50) for i in range(len(reps))]
+    # Ensure adjusted sets and reps are at least 1
+    plan_data['Adjusted_Sets'] = plan_data['Adjusted_Sets'].clip(lower=1)
+    plan_data['Adjusted_Reps'] = plan_data['Adjusted_Reps'].clip(lower=1)
 
-    # Construct the customized workout plan as a DataFrame
-    workout_plan_df = pd.DataFrame({
-        "Exercise": exercises,
-        "Reps": adjusted_reps,
-        "Sets": adjusted_sets
-    })
+    # Construct the customized workout plan DataFrame
+    workout_plan_df = plan_data[['Exercise', 'Adjusted_Sets', 'Adjusted_Reps']]
 
     return workout_plan_df
 
@@ -78,17 +74,17 @@ def print_workout_plan(workout_plan_df, workout_plan_number):
 
 
 def main():
-    print("Welcome to the Workout Planner Console Menu!!!")
+    print("Welcome to the FitFlow workout plan generator!!!")
     while True:
         print("\nSelect an option:")
-        print("1. Generate Workout Plan")
+        print("1. Enter Number 1 For Customize Your Workout Plan")
         print("2. Exit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
             try:
-                calories_burned = int(input("Enter total calories burned by steps counter: "))
-                workout_plan_number = input("Enter the number of the workout plan (e.g., '1plan'): ")
+                calories_burned = int(input("Enter the total calories burned from the STEPS COUNTER: "))
+                workout_plan_number = input("Enter the number of the workout plan you selected (e.g., '1plan'): ")
                 workout_plan = generate_workout_plan(calories_burned, workout_plan_number)
                 
                 print("\n>>>>>>Generated Workout Plan<<<<<<")
