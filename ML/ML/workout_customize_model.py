@@ -78,7 +78,7 @@ def main():
     while True:
         print("\nSelect an option:")
         print("1. Enter Number 1 For Customize Your Workout Plan")
-        print("2. Exit")
+        print("2. Enter Number 2 For Exit The Program")
         choice = input("Enter your choice: ")
 
         if choice == '1':
