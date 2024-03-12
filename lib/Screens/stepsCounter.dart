@@ -29,6 +29,9 @@ class _StepCountPageState extends State<StepCountPage> {
   @override
   void initState() {
     super.initState();
+    // Load stored data from Firestore
+    _loadStoredData();
+    // Start listening for accelerometer and GPS data
     _startListening();
   }
 
@@ -37,6 +40,24 @@ class _StepCountPageState extends State<StepCountPage> {
     super.dispose();
     _stopListening();
   }
+
+  void _loadStoredData() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      try {
+        DocumentSnapshot snapshot = await FirebaseFirestore.instance.collection('StepCount').doc(user.uid).get();
+        if (snapshot.exists) {
+          setState(() {
+            _stepCount = snapshot['sensorCount'];
+            _distanceTravelled = snapshot['distanceTravelled'];
+          });
+        }
+      } catch (error) {
+        print('Error loading stored data: $error');
+      }
+    }
+  }
+
 
   void _startListening() {
     _accelerometerSubscription = accelerometerEvents.listen((AccelerometerEvent event) {
@@ -109,7 +130,7 @@ class _StepCountPageState extends State<StepCountPage> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 170),
+          padding: EdgeInsets.only(top: 185),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -186,7 +207,7 @@ class _StepCountPageState extends State<StepCountPage> {
                     ),
                     child: Text(
                       _isListening ? 'Stop' : 'Start',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 12, color: Colors.white),
                     ),
                   ),
                 ),
@@ -221,7 +242,7 @@ class _StepCountPageState extends State<StepCountPage> {
                     ),
                     child: Text(
                       'Update Workout Plan',
-                      style: TextStyle(fontSize: 16, color: Colors.white),
+                      style: TextStyle(fontSize: 14, color: Colors.white),
                     ),
                   ),
                 )

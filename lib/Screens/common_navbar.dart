@@ -23,6 +23,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
         return false; // Prevents default back button behavior
       },
       child: Scaffold(
+        backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.teal.withOpacity(0.5),
           elevation: 3,
@@ -48,7 +49,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                   icon: Icon(
                     Icons.menu,
                     color: Colors.black,
-                    size: 40,
+                    size: 30,
                   ),
                   color: Colors.transparent,
                   itemBuilder: (context) => [

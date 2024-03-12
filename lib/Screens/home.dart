@@ -1,8 +1,11 @@
+import 'package:auth3/Screens/TDEE_Test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
+import 'Setting.dart';
 import 'common_navbar.dart';
+import 'feedbackPage.dart';
 import 'input.dart';
 import 'stepsCounter.dart';
 import 'about_us.dart';
@@ -84,7 +87,7 @@ class _HomePageState extends State<homePage> {
                               Navigator.pop(context); // Close loading indicator
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => input()),
+                                MaterialPageRoute(builder: (context) => BMRPage()),
                               );
                             }),
                             buildButton(context, '', 'assets/cal3.png', () async {
@@ -165,7 +168,7 @@ class _HomePageState extends State<homePage> {
                               await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
                               // Navigate to input page
                               Navigator.pop(context);
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => SettingsPage()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => FitFlowApp()));
                             }),
                             buildButton(context, '', 'assets/feed.png', () async {
                               // Show loading indicator
@@ -182,7 +185,7 @@ class _HomePageState extends State<homePage> {
                               await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
                               // Navigate to input page
                               Navigator.pop(context);
-                              //Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage()));
                             }),
                           ],
                         ),
