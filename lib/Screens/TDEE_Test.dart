@@ -235,6 +235,7 @@ class _BMRPageState extends State<BMRPage> {
                       ),
                     ),
                     onPressed: () {
+                      Navigator.pop(context); // Close the current page
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => WorkoutPage()),

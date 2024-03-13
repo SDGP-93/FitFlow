@@ -121,6 +121,8 @@ class _StepCountPageState extends State<StepCountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
       appBar: CommonNavBar(),
       body: Container(
         decoration: BoxDecoration(
@@ -130,7 +132,7 @@ class _StepCountPageState extends State<StepCountPage> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 185),
+          padding: EdgeInsets.only(top: 225),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,

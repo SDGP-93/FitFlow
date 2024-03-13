@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'common_navbar.dart';
 
@@ -12,6 +15,8 @@ class WorkoutPage extends StatefulWidget {
 class _WorkoutPageState extends State<WorkoutPage> {
   TextEditingController _caloriesController = TextEditingController();
   List<dynamic> _workouts = [];
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Future<void> _generateWorkout() async {
     final response = await http.post(
@@ -30,6 +35,29 @@ class _WorkoutPageState extends State<WorkoutPage> {
       });
     } else {
       throw Exception('Failed to load workout');
+    }
+  }
+
+  Future<void> _saveWorkoutToFirestore() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String userId = user.uid;
+      CollectionReference savedWorkoutsCollection =
+      _firestore.collection('users').doc(userId).collection('SavedWorkouts');
+
+      // Fetch existing documents and delete them
+      QuerySnapshot querySnapshot = await savedWorkoutsCollection.get();
+      for (QueryDocumentSnapshot docSnapshot in querySnapshot.docs) {
+        await docSnapshot.reference.delete();
+      }
+
+      // Add each workout to the collection
+      _workouts.forEach((workout) async {
+        await savedWorkoutsCollection.add(workout);
+      });
+
+      // Close the page after saving
+      Navigator.pop(context);
     }
   }
 
@@ -121,6 +149,16 @@ class _WorkoutPageState extends State<WorkoutPage> {
                       ),
                     );
                   },
+                ),
+              ),
+              SizedBox(height: 15),
+              ElevatedButton(
+                onPressed: _saveWorkoutToFirestore,
+                child: Text(
+                  'Save Workout',
+                  style: TextStyle(
+                    color: Colors.teal,
+                  ),
                 ),
               ),
             ],
