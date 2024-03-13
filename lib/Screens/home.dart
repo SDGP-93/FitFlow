@@ -81,8 +81,10 @@ class _HomePageState extends State<homePage> {
                                   );
                                 },
                               );
-                              // Wait for 1 or 2 seconds
-                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
+
+                              // Wait for 2 seconds
+                              await Future.delayed(Duration(seconds: 2)); // Adjust the duration as needed
+
                               // Navigate to input page
                               Navigator.pop(context); // Close loading indicator
                               Navigator.push(

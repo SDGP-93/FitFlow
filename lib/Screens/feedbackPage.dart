@@ -57,7 +57,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      backgroundColor: Colors.white70,
+      backgroundColor: Colors.white,
       appBar: CommonNavBar(),
       body: SingleChildScrollView(
         padding: EdgeInsets.fromLTRB(20, 120, 20, 10),
@@ -153,7 +153,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ],
                 ),
                 child: ElevatedButton(
-                  onPressed: _submitFeedback,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     foregroundColor: Colors.transparent,
@@ -166,6 +165,28 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
+                  onPressed: () {
+                    _submitFeedback();
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Success"),
+                          content: Text("Feedback submitted successfully."),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                                Navigator.of(context).pop(); // Close the page
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    Navigator.of(context).pop();
+                  },
                   child: Text(
                     'SUBMIT',
                     style: TextStyle(

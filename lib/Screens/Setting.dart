@@ -1,9 +1,12 @@
+import 'package:auth3/Screens/feedbackPage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'common_navbar.dart';
 import 'home.dart';
+import 'logIn.dart';
 
 void main() {
   runApp(FitFlowApp());
@@ -44,9 +47,9 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Settings'),
-      ),
+      resizeToAvoidBottomInset: false,
+      extendBodyBehindAppBar: true,
+      appBar: CommonNavBar(),
       body: ListView(
         children: [
           ListTile(
@@ -65,7 +68,10 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             title: Text('Feedback'),
             onTap: () {
-              // Implement feedback logic
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FeedbackPage()),
+              );
             },
           ),
           ListTile(
@@ -77,8 +83,33 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             title: Text('Logout'),
             onTap: () {
-              // Implement logout logic
-              Navigator.pop(context); // Navigate back to previous screen
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Confirm Logout"),
+                    content: Text("Are you sure you want to log out?"),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text("Cancel"),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => logIn()),
+                          );
+                        },
+                        child: Text("Logout"),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
           ListTile(
