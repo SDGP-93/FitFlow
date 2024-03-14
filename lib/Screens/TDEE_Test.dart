@@ -29,6 +29,9 @@ class _BMRPageState extends State<BMRPage> {
   int _caloriesBurned = 0;
   int caloriesToBeBurned = 0;
 
+  String? _genderError;
+  String? _weightError;
+
   Future<void> _fetchCaloriesBurned() async {
     try {
       // Fetch caloriesBurned from Firestore collection "StepCount" for logged-in user
@@ -56,6 +59,26 @@ class _BMRPageState extends State<BMRPage> {
         _weightController.text.isEmpty ||
         _selectedActivityLevel == null) {
       // Handle the case when any of the input fields are empty
+      setState(() {
+        _genderError = _genderController.text.isEmpty ? 'Please enter your gender' : null;
+        _weightError = _weightController.text.isEmpty ? 'Please enter your weight' : null;
+      });
+      return;
+    }
+
+    // Validate gender
+    if (!['male', 'female'].contains(_genderController.text.toLowerCase())) {
+      setState(() {
+        _genderError = 'Gender should be either male or female';
+      });
+      return;
+    }
+
+    // Validate weight
+    if (int.tryParse(_weightController.text) == null) {
+      setState(() {
+        _weightError = 'Weight should be a valid number';
+      });
       return;
     }
 
@@ -78,6 +101,8 @@ class _BMRPageState extends State<BMRPage> {
         _tdee = data['tdee'].toString().replaceAll(RegExp(r'[^0-9.]'), ''); // Remove non-numeric characters
         // Update calories burned after BMR calculation
         _fetchCaloriesBurned();
+        _genderError = null;
+        _weightError = null;
       });
 
       // Save data to Firestore
@@ -124,7 +149,7 @@ class _BMRPageState extends State<BMRPage> {
       // Parse the cleaned string as a double
       bmrValue = double.tryParse(cleanBMR)?.toInt() ?? 0;
     }
-    caloriesToBeBurned = tdeeValue - bmrValue-  _caloriesBurned;
+    caloriesToBeBurned = tdeeValue - bmrValue - _caloriesBurned;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -143,12 +168,18 @@ class _BMRPageState extends State<BMRPage> {
             children: [
               TextField(
                 controller: _genderController,
-                decoration: InputDecoration(labelText: 'Enter gender (male/female)'),
+                decoration: InputDecoration(
+                  labelText: 'Enter gender (male/female)',
+                  errorText: _genderError,
+                ),
               ),
               TextField(
                 controller: _weightController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Enter weight (kg)'),
+                decoration: InputDecoration(
+                  labelText: 'Enter weight (kg)',
+                  errorText: _weightError,
+                ),
               ),
               DropdownButtonFormField<int>(
                 value: _selectedActivityLevel,
@@ -234,7 +265,9 @@ class _BMRPageState extends State<BMRPage> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: _predictedBMR.isEmpty
+                        ? null
+                        : () {
                       Navigator.pop(context); // Close the current page
                       Navigator.push(
                         context,

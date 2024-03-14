@@ -33,8 +33,12 @@ class FitFlowApp extends StatelessWidget {
           return MaterialApp(
             title: 'FitFlow',
             theme: themeProvider.isDarkMode
-                ? ThemeData.dark()
-                : ThemeData.light(),
+                ? ThemeData.dark().copyWith(
+              scaffoldBackgroundColor: Colors.black,
+            )
+                : ThemeData.light().copyWith(
+              scaffoldBackgroundColor: Colors.blue,
+            ),
             home: SettingsPage(),
           );
         },
@@ -50,84 +54,95 @@ class SettingsPage extends StatelessWidget {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: CommonNavBar(),
-      body: ListView(
-        children: [
-          ListTile(
-            title: Text('Dark Mode'),
-            trailing: Consumer<DarkThemeProvider>(
-              builder: (context, themeProvider, child) {
-                return Switch(
-                  value: themeProvider.isDarkMode,
-                  onChanged: (value) {
-                    themeProvider.toggleDarkMode(value);
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: Provider.of<DarkThemeProvider>(context).isDarkMode
+                ? [Colors.black,Colors.black, Colors.teal]
+                : [Colors.white,Colors.white, Colors.teal],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: ListView(
+          children: [
+            ListTile(
+              title: Text('Dark Mode'),
+              trailing: Consumer<DarkThemeProvider>(
+                builder: (context, themeProvider, child) {
+                  return Switch(
+                    value: themeProvider.isDarkMode,
+                    onChanged: (value) {
+                      themeProvider.toggleDarkMode(value);
+                    },
+                  );
+                },
+              ),
+            ),
+            ListTile(
+              title: Text('Feedback'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => FeedbackPage()),
+                );
+              },
+            ),
+            ListTile(
+              title: Text('Change Password'),
+              onTap: () {
+                // Implement change password logic
+              },
+            ),
+            ListTile(
+              title: Text('Logout'),
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text("Confirm Logout"),
+                      content: Text("Are you sure you want to log out?"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Close the dialog
+                          },
+                          child: Text("Cancel"),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            FirebaseAuth.instance.signOut();
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => logIn()),
+                            );
+                          },
+                          child: Text("Logout"),
+                        ),
+                      ],
+                    );
                   },
                 );
               },
             ),
-          ),
-          ListTile(
-            title: Text('Feedback'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => FeedbackPage()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('Change Password'),
-            onTap: () {
-              // Implement change password logic
-            },
-          ),
-          ListTile(
-            title: Text('Logout'),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text("Confirm Logout"),
-                    content: Text("Are you sure you want to log out?"),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
-                        },
-                        child: Text("Cancel"),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          FirebaseAuth.instance.signOut();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => logIn()),
-                          );
-                        },
-                        child: Text("Logout"),
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-          ListTile(
-            title: Text(
-              'Delete Account',
-              style: TextStyle(color: Colors.red),
+            ListTile(
+              title: Text(
+                'Delete Account',
+                style: TextStyle(color: Colors.red),
+              ),
+              onTap: () {
+                // Implement delete account logic
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DeleteAccountDialog();
+                  },
+                );
+              },
             ),
-            onTap: () {
-              // Implement delete account logic
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return DeleteAccountDialog();
-                },
-              );
-            },
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -176,6 +191,7 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
       throw error; // Rethrow the error for handling in the calling code
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -215,7 +231,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
               );
               return;
             }
-
 
             // Delete account only if email matches
             try {

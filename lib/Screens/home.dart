@@ -1,3 +1,4 @@
+import 'package:auth3/Screens/SavedWorkoutPage.dart';
 import 'package:auth3/Screens/TDEE_Test.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -263,17 +264,36 @@ class _HomePageState extends State<homePage> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: toggleTheme,
-          backgroundColor: Colors.black,
-          mini: true,
-          child: Icon(
-            Icons.light_mode,
-            color: Colors.teal,
-          ),
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                // Navigate to the FeedbackPage
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SavedWorkoutsPage()),
+                );
+              },
+              backgroundColor: Colors.black,
+              mini: true,
+              child: Icon(
+                Icons.fitness_center,
+                color: Colors.teal,
+              ),
+            ),
+            FloatingActionButton(
+              onPressed: toggleTheme,
+              backgroundColor: Colors.black,
+              mini: true,
+              child: Icon(
+                Icons.light_mode,
+                color: Colors.teal,
+              ),
+            ),
+          ],
         ),
       ),
-
     );
   }
 
@@ -337,7 +357,7 @@ final lightGradient = LinearGradient(
 );
 
 final darkGradient = LinearGradient(
-  colors: [Colors.black,Colors.black, Colors.teal],
+  colors: [Colors.black,Colors.black12, Colors.teal],
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );
