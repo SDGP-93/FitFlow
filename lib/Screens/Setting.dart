@@ -50,7 +50,7 @@ class FitFlowApp extends StatelessWidget {
 class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold( // Add Scaffold here
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: CommonNavBar(),
@@ -58,8 +58,8 @@ class SettingsPage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: Provider.of<DarkThemeProvider>(context).isDarkMode
-                ? [Colors.black,Colors.black, Colors.teal]
-                : [Colors.white,Colors.white, Colors.teal],
+                ? [Colors.black, Colors.black, Colors.teal]
+                : [Colors.white, Colors.white, Colors.teal],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -88,12 +88,17 @@ class SettingsPage extends StatelessWidget {
                 );
               },
             ),
-            ListTile(
-              title: Text('Change Password'),
-              onTap: () {
-                // Implement change password logic
+        ListTile(
+          title: Text('Change Password'),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return ChangePasswordDialog();
               },
-            ),
+            );
+          },
+        ),
             ListTile(
               title: Text('Logout'),
               onTap: () {
@@ -268,6 +273,98 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    super.dispose();
+  }
+}
+class ChangePasswordDialog extends StatefulWidget {
+  @override
+  _ChangePasswordDialogState createState() => _ChangePasswordDialogState();
+}
+
+class _ChangePasswordDialogState extends State<ChangePasswordDialog> {
+  TextEditingController _newPasswordController = TextEditingController();
+  bool _showConfirmation = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return _showConfirmation
+        ? _buildConfirmationDialog()
+        : _buildChangePasswordDialog();
+  }
+
+  Widget _buildChangePasswordDialog() {
+    return AlertDialog(
+      title: Text("Change Password"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            controller: _newPasswordController,
+            obscureText: true,
+            decoration: InputDecoration(labelText: 'Enter your new password'),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+          child: Text("Cancel"),
+        ),
+        TextButton(
+          onPressed: () async {
+            try {
+              String newPassword = _newPasswordController.text.trim();
+              if (newPassword.isEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Please enter a new password.'),
+                  ),
+                );
+                return;
+              }
+
+              User? user = FirebaseAuth.instance.currentUser;
+              if (user != null) {
+                await user.updatePassword(newPassword);
+                setState(() {
+                  _showConfirmation = true;
+                });
+              }
+            } catch (error) {
+              print('Error changing password: $error');
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Failed to change password. Please try again.'),
+                ),
+              );
+            }
+          },
+          child: Text("Change"),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildConfirmationDialog() {
+    return AlertDialog(
+      title: Text("Password Changed"),
+      content: Text("Your password has been changed successfully."),
+      actions: [
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop(); // Close the dialog
+          },
+          child: Text("OK"),
+        ),
+      ],
+    );
+  }
+
+  @override
+  void dispose() {
+    _newPasswordController.dispose();
     super.dispose();
   }
 }

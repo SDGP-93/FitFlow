@@ -12,6 +12,7 @@ class signUp extends StatefulWidget {
 class _SignUpState extends State<signUp> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -101,22 +102,41 @@ class _SignUpState extends State<signUp> {
                     // Navigate to input page
                     Navigator.pop(context);
                     try {
-                      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-                        email: _emailController.text,
-                        password: _passwordController.text,
-                      );
-                      // Show success message
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Sign up successful!'),
-                          duration: Duration(seconds: 2), // Adjust the duration as needed
-                        ),
-                      );
-                      // Navigate to the login page
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => logIn()),
-                      );
+                      // Check if the email is a valid Gmail account
+                      if (_emailController.text.endsWith('@gmail.com')) {
+                        await _auth.createUserWithEmailAndPassword(
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+
+                        // Send email verification
+                        User? user = _auth.currentUser;
+                        await user?.sendEmailVerification();
+
+                        // Show success message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'A verification email has been sent to ${_emailController.text}. Please verify your email before signing in.',
+                            ),
+                            duration: Duration(seconds: 5), // Adjust the duration as needed
+                          ),
+                        );
+
+                        // Navigate to the login page
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => logIn()),
+                        );
+                      } else {
+                        // Show error message for non-Gmail account
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please enter a valid Gmail account.'),
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                      }
                     } catch (e) {
                       // Handle errors here (if needed)
                       print('Sign-up failed: $e');
