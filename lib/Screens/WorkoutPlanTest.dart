@@ -20,7 +20,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   Future<void> _generateWorkout() async {
     final response = await http.post(
-      Uri.parse('http://10.31.1.90:5000/generate_workout'),
+      Uri.parse('http://172.27.1.69:5000/generate_workout'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -81,7 +81,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
               TextField(
                 controller: _caloriesController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Enter calories required'),
+                decoration: InputDecoration(
+                  labelText: 'Enter calories required',
+                  hintText: 'Enter the calculated calories to be burned', // Add this line for hint
+                ),
               ),
               SizedBox(height: 15),
               Center(

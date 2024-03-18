@@ -54,25 +54,88 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
             colors: [
               Colors.white.withOpacity(0.3),
               Colors.teal.withOpacity(0.5),
-            ], // Adjust gradient colors as needed
+            ],
           ),
         ),
-        child: _savedWorkouts.isEmpty
-            ? Center(
-          child: Text('No saved workouts'),
-        )
-            : ListView.builder(
-          itemCount: _savedWorkouts.length,
-          itemBuilder: (context, index) {
-            Map<String, dynamic> workout = _savedWorkouts[index];
-            return WorkoutCard(
-              exercise: workout['Exercise']?.toString() ?? '',
-              // Convert to string
-              sets: workout['Sets']?.toString() ?? '',
-              // Convert to string
-              reps: workout['Reps']?.toString() ?? '', // Convert to string
-            );
-          },
+        child: Column(
+          children: [
+            SizedBox(height: 100), // Adjust the spacing as needed
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.teal.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              margin: EdgeInsets.symmetric(horizontal: 20),
+              padding: EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Text(
+                    'SETS',
+                    textAlign: TextAlign.justify,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    '1 set means 1 day per week, if it\'s 3 sets, you should workout the given exercise 3 days per a week\n',
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    'REPS',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Text(
+                    'count of the given workout',
+                    textAlign: TextAlign.start,
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    '➲',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 56,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20), // Adjust the spacing as needed
+            Expanded(
+              child: _savedWorkouts.isEmpty
+                  ? Center(
+                child: Text('No saved workouts'),
+              )
+                  : ListView.builder(
+                itemCount: _savedWorkouts.length,
+                itemBuilder: (context, index) {
+                  Map<String, dynamic> workout = _savedWorkouts[index];
+                  return WorkoutCard(
+                    exercise: workout['Exercise']?.toString() ?? '',
+                    sets: workout['Sets']?.toString() ?? '',
+                    reps: workout['Reps']?.toString() ?? '',
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
