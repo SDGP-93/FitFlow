@@ -44,132 +44,162 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
             Expanded(
               child: Align(
                 alignment: Alignment.topRight,
-                child: PopupMenuButton(
-                  shape: null,
+                child: IconButton(
                   icon: Icon(
                     Icons.menu,
                     color: Colors.black,
                     size: 30,
                   ),
-                  color: Colors.transparent,
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      padding: EdgeInsets.zero,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.black.withOpacity(0.75),
-                              Colors.teal.withOpacity(0.75),
-                              Colors.white.withOpacity(0.75),
-                            ],
+                  onPressed: () {
+                    showModalBottomSheet(
+                      backgroundColor: Colors.transparent,
+                      context: context,
+                      isScrollControlled: true, // Ensures the bottom sheet starts from the top
+                      builder: (BuildContext context) {
+                        return Container(
+                            alignment: Alignment.topRight, // Align to the right edge
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.35,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
-                          ),
+                            colors: [Colors.white, Colors.tealAccent, Colors.teal], // Gradient colors: white to teal
                         ),
+                        ),// Adjust the width as needed
+                        child: Align(
+                        alignment: Alignment.center,
+                        child: SingleChildScrollView(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end, // Align items to the right
-                          children: [
-                            // Fetch user profile image URL from Firestore
-                            StreamBuilder<User?>(
-                              stream: FirebaseAuth.instance.authStateChanges(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
-                                  return SizedBox();
-                                }
-                                String userId = snapshot.data!.uid;
-                                return FutureBuilder<DocumentSnapshot>(
-                                  future: FirebaseFirestore.instance.collection('profiles').doc(userId).get(),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
-                                      return SizedBox();
-                                    }
-                                    String? profileImage = (snapshot.data!.data() as Map<String, dynamic>?)?['profileImage'];
-                                    return profileImage != null
-                                        ? CircleAvatar(
-                                      radius: 20,
-                                      backgroundImage: AssetImage(profileImage),
-                                    )
-                                        : SizedBox();
-                                  },
-                                );
-                              },
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                                  // Fetch user profile image URL from Firestore
+                                  StreamBuilder<User?>(
+                                    stream: FirebaseAuth.instance.authStateChanges(),
+                                    builder: (context, snapshot) {
+                                      if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                                        return SizedBox();
+                                      }
+                                      String userId = snapshot.data!.uid;
+                                      return FutureBuilder<DocumentSnapshot>(
+                                        future: FirebaseFirestore.instance.collection('profiles').doc(userId).get(),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
+                                            return SizedBox();
+                                          }
+                                          String? profileImage = (snapshot.data!.data() as Map<String, dynamic>?)?['profileImage'];
+                                          return profileImage != null
+                                              ? CircleAvatar(
+                                            radius: 50,
+                                            backgroundImage: AssetImage(profileImage),
+                                          )
+                                              : SizedBox(height: 40);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(height: 80),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => UsernamePage()),
+                                      );
+                                    },
+                                    icon: Icon(Icons.ad_units_rounded),
+                                    label: Text('Username'),
+                                  ),
+                                  SizedBox(height: 10),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => ProfilePage()),
+                                      );
+                                    },
+                                    icon: Icon(Icons.account_circle),
+                                    label: Text('Profile'),
+                                  ),
+                                  SizedBox(height: 10),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => FitFlowApp()),
+                                      );
+                                    },
+                                    icon: Icon(Icons.settings),
+                                    label: Text('Settings'),
+                                  ),
+                                  SizedBox(height: 10),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => homePage()),
+                                      );
+                                    },
+                                    icon: Icon(Icons.home),
+                                    label: Text('Home'),
+                                  ),
+                                  SizedBox(height: 10),
+                                  TextButton.icon(
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
+                                      );
+                                    },
+                                    icon: Icon(Icons.directions_run),
+                                    label: Text('Fitflow'),
+                                  ),
+                                  SizedBox(height: 10),
+                                  IconButton(
+                                    onPressed: onBackPressed,
+                                    icon: Icon(Icons.check_circle_outline, color: Colors.teal),
+                                  ),
+                                  SizedBox(height: 50),
+                                  IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text("Confirm Logout"),
+                                            content: Text("Are you sure you want to log out?"),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop(); // Close the dialog
+                                                },
+                                                child: Text("Cancel"),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  FirebaseAuth.instance.signOut();
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(builder: (context) => logIn()),
+                                                  );
+                                                },
+                                                child: Text("Logout"),
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(Icons.logout, color: Colors.white), // Logout button
+                                  ),
+                                ],
+                              ),
                             ),
-                            buildMenuItem(context, 'Username', Icons.ad_units_rounded, () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => UsernamePage()),
-                              );
-                            }),
-                            buildMenuItem(context, 'Profile', Icons.account_circle, () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => ProfilePage()),
-                              );
-                            }),
-                            buildMenuItem(context, 'Settings', Icons.settings, () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FitFlowApp()),
-                              );
-                            }),
-                            buildMenuItem(context, 'Home', Icons.home, () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => homePage()),
-                              );
-                            }),
-                            buildMenuItem(context, 'Fitflow', Icons.directions_run, () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => FitflowHistoryPage()),
-                              );
-                            }),
-                            SizedBox(height: 8),
-                            IconButton(
-                              onPressed: onBackPressed,
-                              icon: Icon(Icons.check_circle_outline, color: Colors.teal),
+                          ),
                             ),
-                            SizedBox(height: 8),
-                            IconButton(
-                              onPressed: () {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Text("Confirm Logout"),
-                                      content: Text("Are you sure you want to log out?"),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop(); // Close the dialog
-                                          },
-                                          child: Text("Cancel"),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            FirebaseAuth.instance.signOut();
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => logIn()),
-                                            );
-                                          },
-                                          child: Text("Logout"),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-                              },
-                              icon: Icon(Icons.logout, color: Colors.red), // Logout button
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                  onSelected: (value) {
-                    // Handle menu item selection here
+                        );
+                      },
+                    );
                   },
                 ),
               ),
@@ -190,30 +220,17 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget buildMenuItem(BuildContext context, String title, IconData icon, void Function()? onPressed) {
-    return TweenAnimationBuilder<double>(
-      tween: Tween<double>(begin: 0.0, end: 1.0),
-      duration: Duration(milliseconds: 500),
-      builder: (context, value, child) {
-        return Opacity(
-          opacity: value,
-          child: Transform.translate(
-            offset: Offset(10, (1 - value) * 30),
-            child: child,
+    return TextButton(
+      onPressed: onPressed,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Text(
+            title,
+            style: TextStyle(color: Colors.white),
           ),
-        );
-      },
-      child: TextButton(
-        onPressed: onPressed,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Text(
-              title,
-              style: TextStyle(color: Colors.white),
-            ),
-            Icon(icon, color: Colors.white),
-          ],
-        ),
+          Icon(icon, color: Colors.white),
+        ],
       ),
     );
   }
@@ -222,3 +239,6 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }
 
+void main() {
+  runApp(CommonNavBar());
+}

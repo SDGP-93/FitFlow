@@ -200,7 +200,7 @@ class _HomePageState extends State<homePage> {
                             'SORE NOW.\nSTRONG FOREVER.',
                             style: TextStyle(
                               fontSize: 25,
-                              color: _isDarkMode ? Colors.tealAccent : Colors.white24,
+                              color: _isDarkMode ? Colors.white : Colors.tealAccent,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -234,21 +234,21 @@ class _HomePageState extends State<homePage> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 8, horizontal: 12),
                                 decoration: BoxDecoration(
-                                  color: _isDarkMode ? Colors.black : Colors.teal,
+                                  color: _isDarkMode ? Colors.black : Colors.white,
                                   borderRadius: BorderRadius.circular(10),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: _isDarkMode ? Colors.tealAccent : Colors.black, // Adjust shadow color if needed
+                                      color: _isDarkMode ? Colors.white : Colors.black, // Adjust shadow color if needed
                                       spreadRadius: 0,
                                       blurRadius: 3,
-                                      offset: Offset(0, 4),
+                                      offset: Offset(2, 1),
                                     ),
                                   ],
                                 ),
                                 child: Text(
                                   '${username ?? 'Not available'}',
                                   style: TextStyle(
-                                    color: _isDarkMode ? Colors.tealAccent : Colors.white,
+                                    color: _isDarkMode ? Colors.white : Colors.black,
                                     fontSize: 20,
                                   ),
                                 ),
@@ -279,7 +279,7 @@ class _HomePageState extends State<homePage> {
               mini: true,
               child: Icon(
                 Icons.fitness_center,
-                color: Colors.teal,
+                color: Colors.tealAccent,
               ),
             ),
             FloatingActionButton(
@@ -288,7 +288,7 @@ class _HomePageState extends State<homePage> {
               mini: true,
               child: Icon(
                 Icons.light_mode,
-                color: Colors.teal,
+                color: Colors.tealAccent,
               ),
             ),
           ],
@@ -304,8 +304,8 @@ class _HomePageState extends State<homePage> {
       curve: Curves.bounceIn,
       transform: Matrix4.identity()..scale(1.0),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.black,
+        borderRadius: BorderRadius.circular(30.0),
+        color: Colors.white,
         image: DecorationImage(
           image: AssetImage(backgroundImage),
           fit: BoxFit.cover,
@@ -313,18 +313,18 @@ class _HomePageState extends State<homePage> {
         boxShadow: _isDarkMode
             ? [
           BoxShadow(
-            color: Colors.tealAccent,
-            spreadRadius: 1.5,
-            blurRadius: 10.0,
-            offset: Offset(0, 0),
+            color: Colors.black12,
+            spreadRadius: 0.5,
+            blurRadius: 3.0,
+            offset: Offset(2, 1),
           ),
         ]
             : [
           BoxShadow(
-            color: Colors.teal,
+            color: Colors.black26,
             spreadRadius: 0.5,
             blurRadius: 3.0,
-            offset: Offset(0, 3),
+            offset: Offset(2, 1),
           ),
         ],
       ),
@@ -351,13 +351,13 @@ class _HomePageState extends State<homePage> {
 }
 
 final lightGradient = LinearGradient(
-  colors: [Colors.white,Colors.white, Colors.teal],
+  colors: [Colors.white,Colors.tealAccent, Colors.teal, Colors.teal],
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );
 
 final darkGradient = LinearGradient(
-  colors: [Colors.black,Colors.black12, Colors.teal],
+  colors: [Colors.black,Colors.black26, Colors.tealAccent],
   begin: Alignment.topLeft,
   end: Alignment.bottomRight,
 );

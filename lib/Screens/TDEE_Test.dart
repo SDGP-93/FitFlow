@@ -83,7 +83,7 @@ class _BMRPageState extends State<BMRPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://172.27.1.69:5000/calculate_bmr'),
+      Uri.parse('http://10.31.1.90:5000/calculate_bmr'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -169,7 +169,7 @@ class _BMRPageState extends State<BMRPage> {
               TextField(
                 controller: _genderController,
                 decoration: InputDecoration(
-                  labelText: 'Enter gender (male/female)',
+                  labelText: 'Enter Sex (male/female)',
                   errorText: _genderError,
                 ),
               ),

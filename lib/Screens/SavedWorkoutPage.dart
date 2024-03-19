@@ -40,6 +40,24 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
     }
   }
 
+  Future<void> _removeWorkout(int index) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      String userId = user.uid;
+      CollectionReference savedWorkoutsCollection =
+      _firestore.collection('users').doc(userId).collection('SavedWorkouts');
+
+      try {
+        await savedWorkoutsCollection.doc(_savedWorkouts[index]['id']).delete();
+        setState(() {
+          _savedWorkouts.removeAt(index);
+        });
+      } catch (error) {
+        print('Failed to remove workout: $error');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,14 +80,14 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
             SizedBox(height: 100), // Adjust the spacing as needed
             Container(
               decoration: BoxDecoration(
-                color: Colors.teal.withOpacity(0.5),
+                color: Colors.teal.withOpacity(0.7),
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
-                    blurRadius: 7,
-                    offset: Offset(0, 3),
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 0.5,
+                    blurRadius: 3,
+                    offset: Offset(2, 1),
                   ),
                 ],
               ),
@@ -89,6 +107,10 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
                   Text(
                     '1 set means 1 day per week, if it\'s 3 sets, you should workout the given exercise 3 days per a week\n',
                     textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.tealAccent,
+                    ),
                   ),
                   SizedBox(height: 20),
                   Text(
@@ -103,11 +125,15 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
                   Text(
                     'count of the given workout',
                     textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.tealAccent,
+                    ),
                   ),
                   SizedBox(height: 20),
                   Text(
                     '➲',
-                    textAlign: TextAlign.start,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 56,
                       fontWeight: FontWeight.bold,
@@ -121,7 +147,7 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
             Expanded(
               child: _savedWorkouts.isEmpty
                   ? Center(
-                child: Text('No saved workouts'),
+                child: Text('NO WORKOUTS AVAILABLE'),
               )
                   : ListView.builder(
                 itemCount: _savedWorkouts.length,
@@ -131,6 +157,7 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
                     exercise: workout['Exercise']?.toString() ?? '',
                     sets: workout['Sets']?.toString() ?? '',
                     reps: workout['Reps']?.toString() ?? '',
+                    onComplete: () => _removeWorkout(index),
                   );
                 },
               ),
@@ -146,17 +173,19 @@ class WorkoutCard extends StatelessWidget {
   final String exercise;
   final String sets;
   final String reps;
+  final VoidCallback onComplete;
 
   const WorkoutCard({
     required this.exercise,
     required this.sets,
     required this.reps,
+    required this.onComplete,
   });
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 6,
+      elevation: 5,
       margin: EdgeInsets.all(20),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
@@ -169,8 +198,8 @@ class WorkoutCard extends StatelessWidget {
             Text(
               exercise,
               style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(height: 6),
@@ -198,9 +227,7 @@ class WorkoutCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {
-                    // Add custom functionality here
-                  },
+                  onPressed: onComplete,
                   child: Text(
                     'COMPLETE',
                     style: TextStyle(

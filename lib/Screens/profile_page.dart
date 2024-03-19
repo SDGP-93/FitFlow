@@ -66,7 +66,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           radius: 50,
                           child: Icon(Icons.person),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 30),
                         Container(
                           padding: EdgeInsets.all(20),
                           child: Column(
@@ -120,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         ),
                         SizedBox(height: 60),
                         Container(
-                          width: 170,
+                          width: 190,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.0),
                             gradient: LinearGradient(
