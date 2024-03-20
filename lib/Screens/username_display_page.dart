@@ -145,7 +145,7 @@ class _UsernamePageState extends State<UsernamePage> {
                       'EDIT USERNAME',
                       style: TextStyle(
                         color: Colors.teal,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.bold,
                         fontFamily: '',
                       ),
