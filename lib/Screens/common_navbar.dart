@@ -66,6 +66,29 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                             curve: Curves.linearToEaseOut,
                           )),
                           child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage('assets/aboutBg2.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Stack(// Use a Stack to overlap widgets
+                                children: [
+                            Transform.rotate(
+                            angle: -90 * (3.14 / 180), // Convert degrees to radians
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                'F I T F L O W',
+                                style: TextStyle(
+                                  fontSize: 64,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.teal,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
                             alignment: Alignment.topRight, // Align to the right edge
                             color: Colors.transparent, // Transparent background
                             child: Container(
@@ -74,7 +97,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                 gradient: LinearGradient(
                                   begin: Alignment.topRight,
                                   end: Alignment.bottomRight,
-                                  colors: [Colors.white.withOpacity(0.8), Colors.tealAccent.withOpacity(0.9), Colors.teal.withOpacity(0.8)], // Gradient colors: white to teal
+                                  colors: [Colors.white.withOpacity(0.5), Colors.tealAccent.withOpacity(0.7), Colors.teal.withOpacity(0.8)], // Gradient colors: white to teal
                                 ),
                               ),
                               child: Align(
@@ -282,12 +305,23 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                         },
                                         icon: Icon(Icons.logout, color: Colors.white), // Logout button
                                       ),
+                                      SizedBox(height: 20),
+                                      // Add the button here
+                                      IconButton(
+                                        onPressed: () {
+                                          Navigator.pop(context); // Close the bottom sheet
+                                        },
+                                        icon: Icon(Icons.close), // Close icon
+                                      )
                                     ],
                                   ),
                                 ),
                               ),
                             ),
                           ),
+                          ],
+                            ),
+                        ),
                         );
                       },
                     );

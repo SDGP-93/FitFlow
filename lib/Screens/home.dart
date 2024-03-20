@@ -221,7 +221,7 @@ class _HomePageState extends State<homePage> {
                               child: Text(
                                 'Update Your Username',
                                 style: TextStyle(
-                                  color: Colors.black,
+                                  color: Colors.white,
                                   fontSize: 10,
                                 ),
                               ),

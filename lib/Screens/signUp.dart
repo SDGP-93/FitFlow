@@ -103,7 +103,8 @@ class _SignUpState extends State<signUp> {
                     Navigator.pop(context);
                     try {
                       // Check if the email is a valid Gmail account
-                      if (_emailController.text.endsWith('@gmail.com')) {
+                      if (_emailController.text.contains('@') &&
+                          _emailController.text.contains('.com')) {
                         await _auth.createUserWithEmailAndPassword(
                           email: _emailController.text,
                           password: _passwordController.text,
@@ -132,7 +133,7 @@ class _SignUpState extends State<signUp> {
                         // Show error message for non-Gmail account
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                            content: Text('Please enter a valid Gmail account.'),
+                            content: Text('Please enter a valid email address.'),
                             duration: Duration(seconds: 2),
                           ),
                         );

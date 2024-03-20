@@ -83,7 +83,7 @@ class _BMRPageState extends State<BMRPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://10.31.1.90:5000/calculate_bmr'),
+      Uri.parse('http://192.168.73.120:5000/calculate_bmr'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

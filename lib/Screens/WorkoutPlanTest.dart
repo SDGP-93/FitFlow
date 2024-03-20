@@ -20,7 +20,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   Future<void> _generateWorkout() async {
     final response = await http.post(
-      Uri.parse('http://10.31.1.90:5000/generate_workout'),
+      Uri.parse('http://192.168.73.120:5000/generate_workout'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
