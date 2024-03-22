@@ -125,7 +125,7 @@ class _logInState extends State<logIn> {
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.all(10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
                       elevation: 0,
                       backgroundColor: Colors.transparent,

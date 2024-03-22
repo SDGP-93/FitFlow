@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auth3/Screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,9 +15,7 @@ class BMRPage extends StatefulWidget {
 class _BMRPageState extends State<BMRPage> {
   TextEditingController _genderController = TextEditingController();
   TextEditingController _weightController = TextEditingController();
-  int? _selectedActivityLevel; // Add this variable to store the selected activity level
-
-  // Options for the activity level dropdown
+  int? _selectedActivityLevel;
   List<String> _activityLevelOptions = [
     '1 - Sedentary (little to no exercise)',
     '2 - Lightly active (light exercise)',
@@ -28,13 +27,11 @@ class _BMRPageState extends State<BMRPage> {
   String _tdee = '';
   int _caloriesBurned = 0;
   int caloriesToBeBurned = 0;
-
   String? _genderError;
   String? _weightError;
 
   Future<void> _fetchCaloriesBurned() async {
     try {
-      // Fetch caloriesBurned from Firestore collection "StepCount" for logged-in user
       User? user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         final snapshot = await FirebaseFirestore.instance
@@ -44,7 +41,6 @@ class _BMRPageState extends State<BMRPage> {
         if (snapshot.exists) {
           setState(() {
             _caloriesBurned = snapshot.data()?['caloriesBurned']?.toInt() ?? 0;
-            // Update caloriesToBeBurned
             caloriesToBeBurned = _caloriesBurned;
           });
         }
@@ -58,7 +54,6 @@ class _BMRPageState extends State<BMRPage> {
     if (_genderController.text.isEmpty ||
         _weightController.text.isEmpty ||
         _selectedActivityLevel == null) {
-      // Handle the case when any of the input fields are empty
       setState(() {
         _genderError = _genderController.text.isEmpty ? 'Please enter your gender' : null;
         _weightError = _weightController.text.isEmpty ? 'Please enter your weight' : null;
@@ -66,7 +61,6 @@ class _BMRPageState extends State<BMRPage> {
       return;
     }
 
-    // Validate gender
     if (!['male', 'female'].contains(_genderController.text.toLowerCase())) {
       setState(() {
         _genderError = 'Gender should be either male or female';
@@ -74,7 +68,6 @@ class _BMRPageState extends State<BMRPage> {
       return;
     }
 
-    // Validate weight
     if (int.tryParse(_weightController.text) == null) {
       setState(() {
         _weightError = 'Weight should be a valid number';
@@ -83,7 +76,7 @@ class _BMRPageState extends State<BMRPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.73.120:5000/calculate_bmr'),
+      Uri.parse('http://10.31.1.90:5000/calculate_bmr'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -155,15 +148,16 @@ class _BMRPageState extends State<BMRPage> {
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       appBar: CommonNavBar(),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/bmrtdeeBg.jpg'),
-            fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/bmrtdeeBg.jpg'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 80, 10, 20),
+          padding: EdgeInsets.fromLTRB(20, 70, 10, 40),
           child: Column(
             children: [
               TextField(
@@ -193,7 +187,7 @@ class _BMRPageState extends State<BMRPage> {
                 ),
                 items: List.generate(_activityLevelOptions.length, (index) {
                   return DropdownMenuItem<int>(
-                    value: index + 1, // Index starts from 0, so add 1
+                    value: index + 1,
                     child: Text(_activityLevelOptions[index]),
                   );
                 }),
@@ -234,54 +228,66 @@ class _BMRPageState extends State<BMRPage> {
                 ),
               ),
               SizedBox(height: 80),
-              Center(
-                child: Container(
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
-                        blurRadius: 3,
-                      ),
-                    ],
+              Container(
+                width: MediaQuery.of(context).size.width * 0.5,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  gradient: LinearGradient(
+                    colors: [Colors.black, Colors.black],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.transparent,
-                      elevation: 0,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 30,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.teal,
+                      offset: Offset(0, 2),
+                      blurRadius: 3,
                     ),
-                    onPressed: _predictedBMR.isEmpty
-                        ? null
-                        : () {
-                      Navigator.pop(context); // Close the current page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => WorkoutPage()),
-                      );
-                    },
-                    child: Text(
-                      'Generate Workout Plan',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                      ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.transparent,
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 15,
+                      horizontal: 30,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
+                  onPressed: _predictedBMR.isEmpty
+                      ? null
+                      : () {
+                    Navigator.pop(context); // Close the current page
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WorkoutPage()),
+                    );
+                  },
+                  child: Text(
+                    'Generate Workout Plan',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40), // Add spacing below the button
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => homePage()), // Navigate to startup page
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_back, // Use any icon you prefer
+                  color: Colors.teal,
+                  size: 24,
                 ),
               ),
             ],

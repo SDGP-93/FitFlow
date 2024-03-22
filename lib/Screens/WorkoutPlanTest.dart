@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:auth3/Screens/TDEE_Test.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,7 +21,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   Future<void> _generateWorkout() async {
     final response = await http.post(
-      Uri.parse('http://192.168.73.120:5000/generate_workout'),
+      Uri.parse('http://10.31.1.90:5000/generate_workout'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -129,7 +130,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height:0),
               Expanded(
                 child: ListView.builder(
                   itemCount: _workouts.length,
@@ -154,7 +155,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   },
                 ),
               ),
-              SizedBox(height: 15),
+              SizedBox(height: 5),
               ElevatedButton(
                 onPressed: _saveWorkoutToFirestore,
                 child: Text(
@@ -162,6 +163,20 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   style: TextStyle(
                     color: Colors.teal,
                   ),
+                ),
+              ),
+              SizedBox(height: 20), // Add spacing below the button
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => BMRPage()), // Navigate to startup page
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_back, // Use any icon you prefer
+                  color: Colors.teal,
+                  size: 24,
                 ),
               ),
             ],
