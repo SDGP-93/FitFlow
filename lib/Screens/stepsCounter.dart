@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:sensors/sensors.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'common_navbar.dart';
+import 'home.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -247,7 +247,21 @@ class _StepCountPageState extends State<StepCountPage> {
                       style: TextStyle(fontSize: 14, color: Colors.white),
                     ),
                   ),
-                )
+                ),
+                SizedBox(height: 40), // Add spacing below the button
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => homePage()), // Navigate to startup page
+                    );
+                  },
+                  child: Icon(
+                    Icons.arrow_back, // Use any icon you prefer
+                    color: Colors.teal,
+                    size: 24,
+                  ),
+                ),
               ],
             ),
           ),

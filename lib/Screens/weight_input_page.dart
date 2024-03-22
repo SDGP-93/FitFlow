@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'common_navbar.dart';
+import 'home.dart';
 
 class WeightInputPage extends StatefulWidget {
   @override
@@ -177,11 +178,26 @@ class _WeightInputPageState extends State<WeightInputPage> {
                   child: Text('No weight data available'),
                 ),
               ),
-              SizedBox(height: 80),
+              SizedBox(height: 100),
               LatestWeightMessage(weightData: _weightData.map((data) => data.cast<String, String>()).toList()),
+              SizedBox(height: 40), // Add spacing below the button
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => homePage()), // Navigate to startup page
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_back, // Use any icon you prefer
+                  color: Colors.teal,
+                  size: 24,
+                ),
+              ),
             ],
           ),
         ),
+
       ),
     );
   }

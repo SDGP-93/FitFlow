@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'common_navbar.dart';
+import 'home.dart';
 
 class FeedbackPage extends StatefulWidget {
   @override
@@ -194,6 +195,22 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       fontSize: 14,
                     ),
                   ),
+                ),
+              ),
+            ),
+            SizedBox(height: 50), // Add spacing below the button
+            Center(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => homePage()), // Navigate to startup page
+                  );
+                },
+                child: Icon(
+                  Icons.arrow_back, // Use any icon you prefer
+                  color: Colors.teal,
+                  size: 24,
                 ),
               ),
             ),

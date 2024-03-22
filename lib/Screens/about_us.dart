@@ -57,15 +57,15 @@ class FitflowHistoryPage extends StatelessWidget {
                 ),
               ),
               Positioned(
-                bottom: 20, // Adjust the position as needed
-                right: 20, // Adjust the position as needed
+                bottom: 40, // Adjust the position as needed
+                right: 180, // Adjust the position as needed
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context); // Close the page when tapped
                   },
                   child: CircleAvatar(
-                    backgroundColor: Colors.black.withOpacity(0.5), // Adjust the background color and opacity as needed
-                    child: Icon(Icons.close, color: Colors.white), // Close icon
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.arrow_back, color: Colors.teal), // Close icon
                   ),
                 ),
               ),
