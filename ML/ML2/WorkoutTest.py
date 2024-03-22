@@ -6,7 +6,8 @@ import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
 import random
 
-file_path = "C:/Users/User/Desktop/FitFlow/ML/ML2/exercises - Easy Workouts.csv"
+file_path = r"C:\Users\File\FitFlow\ML\ML2\exercises - Easy Workouts.csv"
+
 data = pd.read_csv(file_path)
 
 X = data[['Sets', 'Reps', 'ExerciseCaloriesBurnt']]
