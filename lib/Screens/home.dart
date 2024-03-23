@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'Setting.dart';
 import 'common_navbar.dart';
 import 'feedbackPage.dart';
-import 'input.dart';
 import 'stepsCounter.dart';
 import 'about_us.dart';
 import 'weight_input_page.dart';
@@ -174,17 +173,6 @@ class _HomePageState extends State<homePage> {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => FitFlowApp()));
                             }),
                             buildButton(context, '', 'assets/feed.png', () async {
-                              // Show loading indicator
-                              showDialog(
-                                context: context,
-                                barrierDismissible: false,
-                                builder: (BuildContext context) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                },
-                              );
-                              // Wait for 1 or 2 seconds
                               await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
                               // Navigate to input page
                               Navigator.pop(context);
@@ -235,11 +223,11 @@ class _HomePageState extends State<homePage> {
                                     vertical: 8, horizontal: 12),
                                 decoration: BoxDecoration(
                                   color: _isDarkMode ? Colors.black : Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
+                                  borderRadius: BorderRadius.circular(30),
                                   boxShadow: [
                                     BoxShadow(
                                       color: _isDarkMode ? Colors.white : Colors.black, // Adjust shadow color if needed
-                                      spreadRadius: 0,
+                                      spreadRadius: 0.5,
                                       blurRadius: 3,
                                       offset: Offset(2, 1),
                                     ),
@@ -264,7 +252,9 @@ class _HomePageState extends State<homePage> {
             ],
           ),
         ),
-        floatingActionButton: Row(
+          floatingActionButton: Padding(
+          padding: EdgeInsets.fromLTRB(30, 0, 0, 0), // Add padding horizontally
+          child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
@@ -293,6 +283,7 @@ class _HomePageState extends State<homePage> {
             ),
           ],
         ),
+      ),
       ),
     );
   }

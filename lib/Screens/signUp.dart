@@ -73,14 +73,14 @@ class _SignUpState extends State<signUp> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   gradient: LinearGradient(
-                    colors: [Colors.black, Colors.black],
+                    colors: [Colors.cyan, Colors.tealAccent],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.teal,
-                      offset: Offset(0, 2),
+                      color: Colors.black,
+                      offset: Offset(2, 1),
                       blurRadius: 3,
                     ),
                   ],
@@ -150,7 +150,7 @@ class _SignUpState extends State<signUp> {
                     ),
                     elevation: 0,
                     backgroundColor: Colors.transparent,
-                    foregroundColor: Colors.transparent,
+                    foregroundColor: Colors.white,
                   ),
                   child: Text(
                     'Sign Up',

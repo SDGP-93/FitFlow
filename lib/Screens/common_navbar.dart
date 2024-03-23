@@ -97,7 +97,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                 gradient: LinearGradient(
                                   begin: Alignment.topRight,
                                   end: Alignment.bottomRight,
-                                  colors: [Colors.white.withOpacity(0.5), Colors.tealAccent.withOpacity(0.7), Colors.teal.withOpacity(0.8)], // Gradient colors: white to teal
+                                  colors: [Colors.cyan.withOpacity(0.5), Colors.tealAccent.withOpacity(0.7), Colors.teal.withOpacity(0.8)], // Gradient colors: white to teal
                                 ),
                               ),
                               child: Align(
@@ -152,7 +152,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                           label: Text(
                                             'User',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 13,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
@@ -180,7 +180,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                           label: Text(
                                             'Profile',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 13,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
@@ -208,7 +208,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                           label: Text(
                                             'Settings',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 13,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
@@ -236,7 +236,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                           label: Text(
                                             'Home',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 13,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),
@@ -264,7 +264,7 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
                                           label: Text(
                                             'Fitflow',
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 13,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white,
                                             ),

@@ -34,10 +34,10 @@ class FitFlowApp extends StatelessWidget {
             title: 'FitFlow',
             theme: themeProvider.isDarkMode
                 ? ThemeData.dark().copyWith(
-              scaffoldBackgroundColor: Colors.black,
+              scaffoldBackgroundColor: Colors.transparent,
             )
                 : ThemeData.light().copyWith(
-              scaffoldBackgroundColor: Colors.blue,
+              scaffoldBackgroundColor: Colors.transparent,
             ),
             home: SettingsPage(),
           );
@@ -58,8 +58,8 @@ class SettingsPage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: Provider.of<DarkThemeProvider>(context).isDarkMode
-                ? [Colors.black, Colors.black, Colors.teal]
-                : [Colors.white, Colors.white, Colors.teal],
+                ? [Colors.black,Colors.black26, Colors.tealAccent]
+                : [Colors.white,Colors.tealAccent, Colors.teal, Colors.teal],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -157,7 +157,8 @@ class SettingsPage extends StatelessWidget {
             MaterialPageRoute(builder: (context) => homePage()),
           );
         },
-        child: Icon(Icons.check),
+        child: Icon(Icons.arrow_back,
+          color: Colors.teal,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
     );

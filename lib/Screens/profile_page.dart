@@ -54,114 +54,102 @@ class _ProfilePageState extends State<ProfilePage> {
                   if (snapshot.hasData) {
                     User? user = snapshot.data;
                     _loadProfileImage(user!.uid); // Load profile image
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        _selectedImage != null
-                            ? CircleAvatar(
-                          radius: 50,
-                          backgroundImage: AssetImage(_selectedImage!),
-                        )
-                            : CircleAvatar(
-                          radius: 50,
-                          child: Icon(Icons.person),
-                        ),
-                        SizedBox(height: 30),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'MY USER ID',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white, // Changing the label color to white
+                    return SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _selectedImage != null
+                              ? CircleAvatar(
+                            radius: MediaQuery.of(context).size.width * 0.15,
+                            backgroundImage: AssetImage(_selectedImage!),
+                          )
+                              : CircleAvatar(
+                            radius: MediaQuery.of(context).size.width * 0.1,
+                            child: Icon(Icons.person),
+                          ),
+                          SizedBox(height: 25),
+                          Container(
+                            padding: EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'My User ID',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white, // Changing the label color to white
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3), // Yellow background for user ID
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Text(
+                                SizedBox(height: 8),
+                                Text(
                                   '${user.uid}',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.teal,
+                                    color: Colors.tealAccent,
                                   ),
                                 ),
-                              ),
-                              SizedBox(height: 10),
-                              Text(
-                                'EMAIL',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white, // Changing the label color to white
+                                SizedBox(height: 16),
+                                Text(
+                                  'Email',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.white, // Changing the label color to white
+                                  ),
                                 ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                decoration: BoxDecoration(
-                                  color: Colors.white.withOpacity(0.3), // Yellow background for email address
-                                  borderRadius: BorderRadius.circular(5),
-                                ),
-                                child: Text(
+                                SizedBox(height: 8),
+                                Text(
                                   '${user.email}',
                                   style: TextStyle(
                                     fontSize: 18,
-                                    color: Colors.teal,
+                                    color: Colors.tealAccent,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: 60),
-                        Container(
-                          width: 190,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            gradient: LinearGradient(
-                              colors: [Colors.black, Colors.black],
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                              ],
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.teal,
-                                offset: Offset(0, 2),
-                                blurRadius: 3,
-                              ),
-                            ],
                           ),
-                          child: ElevatedButton(
-                            onPressed: () => _showImageOptions(),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              foregroundColor: Colors.transparent,
-                              elevation: 0,
-                              padding: EdgeInsets.symmetric(
-                                vertical: 15,
-                                horizontal: 30,
+                          SizedBox(height: 60),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              gradient: LinearGradient(
+                                colors: [Colors.cyan, Colors.teal],
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black,
+                                  offset: Offset(1, 2),
+                                  blurRadius: 3,
+                                ),
+                              ],
                             ),
-                            child: Text(
-                              'CHANGE AVATAR',
-                              style: TextStyle(
-                                  color: Colors.teal,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: ''
+                            child: ElevatedButton(
+                              onPressed: () => _showImageOptions(),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.transparent,
+                                foregroundColor: Colors.transparent,
+                                elevation: 0,
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 15,
+                                  horizontal: 30,
+                                ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                              ),
+                              child: Text(
+                                'CHANGE AVATAR',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     );
                   } else {
                     return Text(
@@ -201,8 +189,8 @@ class _ProfilePageState extends State<ProfilePage> {
       builder: (context) => AlertDialog(
         title: Text('Select Avatar'),
         content: SizedBox(
-          width: 350, // Adjust width as needed
-          height: 400, // Adjust height as needed
+          width: MediaQuery.of(context).size.width * 0.8, // Adjust width as needed
+          height: MediaQuery.of(context).size.height * 0.6, // Adjust height as needed
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

@@ -132,7 +132,7 @@ class _StepCountPageState extends State<StepCountPage> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 225),
+          padding: EdgeInsets.only(top: 210),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -142,7 +142,7 @@ class _StepCountPageState extends State<StepCountPage> {
                   style: TextStyle(fontSize: 12), // Small text
                   textAlign: TextAlign.center, // Align center
                 ),
-                SizedBox(height: 00),
+                SizedBox(height: 0),
                 Container(
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
@@ -157,12 +157,12 @@ class _StepCountPageState extends State<StepCountPage> {
                 SizedBox(height: 20),
                 Text(
                   'STEPS  ${calculateSteps(_distanceTravelled)}',
-                  style: TextStyle(fontSize: 48), // Big text
+                  style: TextStyle(fontSize: 38), // Big text
                   textAlign: TextAlign.center, // Align center
                 ),
                 SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.all(50),
+                  padding: EdgeInsets.all(40),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(

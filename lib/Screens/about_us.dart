@@ -30,20 +30,20 @@ class FitflowHistoryPage extends StatelessWidget {
                     SizedBox(height: MediaQuery.of(context).size.height * 0), // Adjust as needed
                     // Fitflow Logo
                     Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0),
                       child: Image.asset(
                         'assets/logo.png',
                         width: MediaQuery.of(context).size.width * 0.5, // Adjust width as needed
                       ),
                     ),
-                    SizedBox(height: 250),
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.3),
                     // Social Media Icons
                     GridView.count(
                       crossAxisCount: 2, // 2 items per row
                       shrinkWrap: true,
-                      padding: EdgeInsets.all(100),
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 10,
+                      padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.2),
+                      crossAxisSpacing: MediaQuery.of(context).size.width * 0.1,
+                      mainAxisSpacing: MediaQuery.of(context).size.width * 0,
                       children: [
                         buildSocialMediaIcon('assets/insta.png', 'https://www.instagram.com/fitflow.app_?igsh=Z250bzBld2llY2hj'),
                         buildSocialMediaIcon('assets/fb.png', 'https://www.instagram.com/ecom__worldz/?igsh=M296ZGF5NnN4NzM5'),
@@ -51,14 +51,14 @@ class FitflowHistoryPage extends StatelessWidget {
                         buildSocialMediaIcon('assets/x.png', 'mailto:fitflowsnsf@gmail.com'), // Modified to open email client
                       ],
                     ),
-                    SizedBox(height: 10), // Adjust spacing between the grid and bottom edge
-                    SizedBox(height: 10), // Additional space to prevent boxes from touching the bottom edge
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05), // Adjust spacing between the grid and bottom edge
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.05), // Additional space to prevent boxes from touching the bottom edge
                   ],
                 ),
               ),
               Positioned(
-                bottom: 40, // Adjust the position as needed
-                right: 180, // Adjust the position as needed
+                bottom: MediaQuery.of(context).size.height * 0.05, // Adjust the position as needed
+                right: MediaQuery.of(context).size.width * 0.45, // Adjust the position as needed
                 child: GestureDetector(
                   onTap: () {
                     Navigator.pop(context); // Close the page when tapped

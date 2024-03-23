@@ -70,21 +70,26 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.white.withOpacity(0.3),
-              Colors.teal.withOpacity(0.5),
+              Colors.white,
+              Colors.white,
+              Colors.tealAccent,
             ],
           ),
         ),
         child: Column(
           children: [
-            SizedBox(height: 100), // Adjust the spacing as needed
+            SizedBox(height: 100),
             Container(
               decoration: BoxDecoration(
-                color: Colors.teal.withOpacity(0.7),
+                gradient: LinearGradient(
+                  colors: [Colors.cyan, Colors.tealAccent],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
                 borderRadius: BorderRadius.circular(15),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
+                    color: Colors.black,
                     spreadRadius: 0.5,
                     blurRadius: 3,
                     offset: Offset(2, 1),
@@ -109,7 +114,7 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.tealAccent,
+                      color: Colors.black,
                     ),
                   ),
                   SizedBox(height: 20),
@@ -127,7 +132,7 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 16,
-                      color: Colors.tealAccent,
+                      color: Colors.black,
                     ),
                   ),
                   SizedBox(height: 20),

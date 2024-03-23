@@ -1,9 +1,8 @@
 import 'package:auth3/Screens/home.dart';
-import 'package:auth3/Screens/input.dart';
 import 'package:auth3/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'Screens/startUp.dart';
+import 'package:auth3/Screens/startUp.dart';
 
 
 Future <void> main()async{

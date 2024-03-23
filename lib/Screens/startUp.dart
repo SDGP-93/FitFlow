@@ -51,16 +51,16 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                 child: Container(
                   width: 120,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
+                      colors: [Colors.cyan, Colors.tealAccent],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
+                        color: Colors.black,
+                        offset: Offset(2, 1),
                         blurRadius: 3,
                       ),
                     ],
@@ -85,11 +85,13 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.all(10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.white,
                     ),
                     child: Text(
                       'Log In',
@@ -103,16 +105,16 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                 child: Container(
                   width: 120,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
+                    borderRadius: BorderRadius.circular(30.0),
                     gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
+                      colors: [Colors.cyan, Colors.tealAccent],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
+                        color: Colors.black,
+                        offset: Offset(2, 1),
                         blurRadius: 3,
                       ),
                     ],
@@ -137,11 +139,13 @@ class _StartUpState extends State<startUp> with SingleTickerProviderStateMixin {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.all(10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50.0),
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.white,
                     ),
                     child: Text(
                       'Sign Up',

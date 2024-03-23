@@ -21,7 +21,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   Future<void> _generateWorkout() async {
     final response = await http.post(
-      Uri.parse('http://10.31.1.90:5000/generate_workout'),
+      Uri.parse('http://192.168.8.185:5000/generate_workout'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -64,6 +64,9 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
@@ -76,9 +79,10 @@ class _WorkoutPageState extends State<WorkoutPage> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.fromLTRB(20, 65, 20, 10),
+          padding: EdgeInsets.fromLTRB(screenWidth * 0.05, screenHeight * 0.05, screenWidth * 0.05, screenHeight * 0.02),
           child: Column(
             children: [
+              SizedBox(height: screenHeight * 0.02),
               TextField(
                 controller: _caloriesController,
                 keyboardType: TextInputType.number,
@@ -87,57 +91,56 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   hintText: 'Enter the calculated calories to be burned', // Add this line for hint
                 ),
               ),
-              SizedBox(height: 15),
-              Center(
-                child: Container(
-                  width: 190,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
-                    gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
-                        blurRadius: 3,
-                      ),
-                    ],
+              SizedBox(height: screenHeight * 0.025),
+              Container(
+                width: screenWidth * 0.4,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  gradient: LinearGradient(
+                    colors: [Colors.cyan, Colors.tealAccent],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
-                  child: ElevatedButton(
-                    onPressed: _generateWorkout,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.transparent,
-                      elevation: 0,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 5,
-                        horizontal: 3,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      offset: Offset(2, 1),
+                      blurRadius: 3,
                     ),
-                    child: Text(
-                      'SHOW WORKOUT',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 14,
-                      ),
+                  ],
+                ),
+                child: ElevatedButton(
+                  onPressed: _generateWorkout,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.transparent,
+                    elevation: 0,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 3,
+                    ),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: Text(
+                    'SHOW WORKOUT',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: screenWidth * 0.04,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height:0),
+              SizedBox(height: screenHeight * 0.08),
               Expanded(
                 child: ListView.builder(
+                  padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01, horizontal: screenWidth * 0.05),
                   itemCount: _workouts.length,
                   itemBuilder: (context, index) {
                     return Card(
                       elevation: 2,
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      margin: EdgeInsets.symmetric(vertical: screenHeight * 0.009),
                       child: ListTile(
                         title: Text(
                           _workouts[index]['Exercise'],
@@ -155,7 +158,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   },
                 ),
               ),
-              SizedBox(height: 5),
+              SizedBox(height: screenHeight * 0.01),
               ElevatedButton(
                 onPressed: _saveWorkoutToFirestore,
                 child: Text(
@@ -165,7 +168,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20), // Add spacing below the button
+              SizedBox(height: screenHeight * 0.01),
               GestureDetector(
                 onTap: () {
                   Navigator.pushReplacement(

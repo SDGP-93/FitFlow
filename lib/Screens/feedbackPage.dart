@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'common_navbar.dart';
 import 'home.dart';
 
@@ -54,22 +53,23 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    double _screenWidth = MediaQuery.of(context).size.width;
 
+    return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.white,
       appBar: CommonNavBar(),
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(20, 120, 20, 10),
+        padding: EdgeInsets.symmetric(horizontal: _screenWidth * 0.05, vertical: _screenWidth * 0.3), // Adjust top and horizontal padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Provide Your Feedback',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: _screenWidth * 0.05, fontWeight: FontWeight.bold), // Adjust font size
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: _screenWidth * 0.02),
             TextFormField(
               maxLines: 5,
               maxLength: 250,
@@ -88,13 +88,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
             ),
-            SizedBox(height: 30.0),
+            SizedBox(height: _screenWidth * 0.05),
             Text(
               'Rate Our Service',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: _screenWidth * 0.05, fontWeight: FontWeight.bold), // Adjust font size
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: _screenWidth * 0.02),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 for (int i = 1; i <= 5; i++)
                   GestureDetector(
@@ -106,16 +107,17 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     child: Icon(
                       _rating >= i ? Icons.star : Icons.star_border,
                       color: Colors.teal,
+                      size: _screenWidth * 0.1, // Adjust icon size
                     ),
                   ),
               ],
             ),
-            SizedBox(height: 40.0),
+            SizedBox(height: _screenWidth * 0.05),
             Text(
               'Any issues encountered while using the app',
-              style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: _screenWidth * 0.05, fontWeight: FontWeight.bold), // Adjust font size
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: _screenWidth * 0.02),
             TextFormField(
               maxLines: 3,
               maxLength: 100,
@@ -134,21 +136,21 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 });
               },
             ),
-            SizedBox(height: 40),
+            SizedBox(height: _screenWidth * 0.05),
             Center(
               child: Container(
-                width: 190,
+                width: _screenWidth * 0.6, // Adjust button width
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   gradient: LinearGradient(
-                    colors: [Colors.black, Colors.black],
+                    colors: [Colors.cyan, Colors.tealAccent],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.teal,
-                      offset: Offset(0, 2),
+                      color: Colors.black,
+                      offset: Offset(2, 1),
                       blurRadius: 3,
                     ),
                   ],
@@ -159,8 +161,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     foregroundColor: Colors.transparent,
                     elevation: 0,
                     padding: EdgeInsets.symmetric(
-                      vertical: 5,
-                      horizontal: 3,
+                      vertical: _screenWidth * 0.015, // Adjust vertical padding
+                      horizontal: _screenWidth * 0.03, // Adjust horizontal padding
                     ),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -168,37 +170,20 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   ),
                   onPressed: () {
                     _submitFeedback();
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Success"),
-                          content: Text("Feedback submitted successfully."),
-                          actions: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop(); // Close the dialog
-                                Navigator.of(context).pop(); // Close the page
-                              },
-                              child: Text("OK"),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+                    // Removed showDialog here as it's already called inside _submitFeedback
                     Navigator.of(context).pop();
                   },
                   child: Text(
                     'SUBMIT',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14,
+                      fontSize: _screenWidth * 0.04, // Adjust font size dynamically
                     ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 50), // Add spacing below the button
+            SizedBox(height: _screenWidth * 0.1), // Adjust spacing
             Center(
               child: GestureDetector(
                 onTap: () {
@@ -210,7 +195,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 child: Icon(
                   Icons.arrow_back, // Use any icon you prefer
                   color: Colors.teal,
-                  size: 24,
+                  size: _screenWidth * 0.06, // Adjust icon size
                 ),
               ),
             ),

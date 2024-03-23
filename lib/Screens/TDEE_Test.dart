@@ -76,7 +76,7 @@ class _BMRPageState extends State<BMRPage> {
     }
 
     final response = await http.post(
-      Uri.parse('http://10.31.1.90:5000/calculate_bmr'),
+      Uri.parse('http://192.168.8.185:5000/calculate_bmr'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -157,7 +157,7 @@ class _BMRPageState extends State<BMRPage> {
               fit: BoxFit.cover,
             ),
           ),
-          padding: EdgeInsets.fromLTRB(20, 70, 10, 40),
+          padding: EdgeInsets.fromLTRB(20, 60, 10, 40),
           child: Column(
             children: [
               TextField(
@@ -199,10 +199,10 @@ class _BMRPageState extends State<BMRPage> {
               ),
               SizedBox(height: 60),
               Text(
-                'Basal Metabolic Rate(BMR) \n$_predictedBMR',
+                'Basal Metabolic Rate(BMR)\n${_predictedBMR.replaceAll('[', '').replaceAll(']', '')}',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -212,7 +212,7 @@ class _BMRPageState extends State<BMRPage> {
                 'Total Daily Energy Expenditure(TDEE) \n$_tdee',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
                 ),
@@ -222,25 +222,25 @@ class _BMRPageState extends State<BMRPage> {
                 'Predicted Calorie Goal\n $caloriesToBeBurned',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: MediaQuery.of(context).size.width * 0.04,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),
               ),
               SizedBox(height: 80),
               Container(
-                width: MediaQuery.of(context).size.width * 0.5,
+                width: MediaQuery.of(context).size.width * 0.6,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30.0),
                   gradient: LinearGradient(
-                    colors: [Colors.black, Colors.black],
+                    colors: [Colors.cyan, Colors.tealAccent],
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.teal,
-                      offset: Offset(0, 2),
+                      color: Colors.black,
+                      offset: Offset(2, 1),
                       blurRadius: 3,
                     ),
                   ],
@@ -271,12 +271,12 @@ class _BMRPageState extends State<BMRPage> {
                     'Generate Workout Plan',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 13,
+                      fontSize: MediaQuery.of(context).size.width * 0.04,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 40), // Add spacing below the button
+              SizedBox(height: 40),
               GestureDetector(
                 onTap: () {
                   Navigator.pushReplacement(

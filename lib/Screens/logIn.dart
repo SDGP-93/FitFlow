@@ -2,7 +2,6 @@ import 'package:auth3/Screens/home.dart';
 import 'package:auth3/Screens/startUp.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'login_success.dart';
 import 'startUp.dart'; // Import the startup page
 
 class logIn extends StatefulWidget {
@@ -80,14 +79,14 @@ class _logInState extends State<logIn> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
+                      colors: [Colors.cyan, Colors.tealAccent],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
+                        color: Colors.black,
+                        offset: Offset(2, 1),
                         blurRadius: 3,
                       ),
                     ],
@@ -129,7 +128,7 @@ class _logInState extends State<logIn> {
                       ),
                       elevation: 0,
                       backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.transparent,
+                      foregroundColor: Colors.white,
                     ),
                     child: Text(
                       'LOGIN',

@@ -88,19 +88,21 @@ class _WeightInputPageState extends State<WeightInputPage> {
       appBar: CommonNavBar(),
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             image: DecorationImage(
               image: AssetImage('assets/weightBg.png'),
               fit: BoxFit.cover,
             ),
           ),
-          padding: EdgeInsets.fromLTRB(40, 100, 40, 20),
+          padding: EdgeInsets.fromLTRB(20, 65, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 60,
+                height: 20,
+              ),
+              SizedBox(
+                height: 50,
                 child: TextField(
                   controller: _weightController,
                   keyboardType: TextInputType.number,
@@ -111,9 +113,9 @@ class _WeightInputPageState extends State<WeightInputPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               SizedBox(
-                height: 60,
+                height: 50,
                 child: DropdownButtonFormField<String>(
                   value: _selectedWeek,
                   items: _weeks.map((week) {
@@ -136,51 +138,54 @@ class _WeightInputPageState extends State<WeightInputPage> {
                   ),
                 ),
               ),
-              SizedBox(height: 15),
-              Center(
-                child: Container(
-                  width: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50.0),
-                    gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
-                        blurRadius: 3,
-                      ),
-                    ],
+              SizedBox(height: 10),
+              Container(
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  gradient: LinearGradient(
+                    colors: [Colors.cyan, Colors.tealAccent],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
-                  child: ElevatedButton(
-                    onPressed: _submitData,
-                    child: Text(
-                      'DONE',
-                      style: TextStyle(color: Colors.teal),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black,
+                      offset: Offset(2, 1),
+                      blurRadius: 3,
                     ),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                      elevation: 5,
-                      shadowColor: Colors.teal,
-                    ),
+                  ],
+                ),
+              child: ElevatedButton(
+                onPressed: _submitData,
+                child: Text(
+                  'DONE',
+                  style: TextStyle(color: Colors.white),
+                ),
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.all(10),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
                   ),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  foregroundColor: Colors.white,
                 ),
               ),
-              SizedBox(height: 40),
-              SizedBox(
-                height: 250,
+              ),
+              SizedBox(height: 30),
+              Container(
+                padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                height: MediaQuery.of(context).size.height * 0.4,
                 child: _weightData.isNotEmpty
                     ? CustomGraph(weightData: _weightData.map((data) => data.cast<String, String>()).toList())
                     : Center(
                   child: Text('No weight data available'),
                 ),
               ),
-              SizedBox(height: 100),
+              SizedBox(height: 40),
               LatestWeightMessage(weightData: _weightData.map((data) => data.cast<String, String>()).toList()),
-              SizedBox(height: 40), // Add spacing below the button
+              SizedBox(height: 40),
               GestureDetector(
                 onTap: () {
                   Navigator.pushReplacement(
@@ -197,7 +202,6 @@ class _WeightInputPageState extends State<WeightInputPage> {
             ],
           ),
         ),
-
       ),
     );
   }
@@ -236,64 +240,67 @@ class CustomGraph extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.teal.withOpacity(0.5), Colors.black.withOpacity(0.5)],
+          colors: [Colors.grey.withOpacity(0), Colors.black.withOpacity(0)],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
       ),
-      padding: const EdgeInsets.all(10), // Adjust the padding as needed
-      child: LineChart(
-        LineChartData(
-          lineBarsData: [
-            LineChartBarData(
-              spots: spots,
-              isCurved: true,
-              colors: spots.map((spot) {
-                if (spot.y == highestWeight) {
-                  return Colors.yellow; // Set color to red for highest weight dot
-                } else if (spot.y == lowestWeight) {
-                  return Colors.white; // Set color to green for lowest weight dot
-                } else {
-                  return Colors.black; // Default color for other dots
-                }
-              }).toList(),
-              dotData: FlDotData(show: true), // Show dots
-              belowBarData: BarAreaData(show: false),
-            ),
-          ],
-          titlesData: FlTitlesData(
-            bottomTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 10,
-              getTextStyles: (value) => const TextStyle(
-                color: Colors.white,
-                fontSize: 5,
+      padding: const EdgeInsets.fromLTRB(15,20, 18, 5), // Adjust the padding as needed
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: LineChart(
+          LineChartData(
+            lineBarsData: [
+              LineChartBarData(
+                spots: spots,
+                isCurved: true,
+                colors: spots.map((spot) {
+                  if (spot.y == highestWeight) {
+                    return Colors.red; // Set color to red for highest weight dot
+                  } else if (spot.y == lowestWeight) {
+                    return Colors.teal; // Set color to green for lowest weight dot
+                  } else {
+                    return Colors.black; // Default color for other dots
+                  }
+                }).toList(),
+                dotData: FlDotData(show: true), // Show dots
+                belowBarData: BarAreaData(show: false),
               ),
-              getTitles: (value) {
-                if (value == 0) {
-                  return '';
-                }
-                return weightData[(value - 1).toInt()]['week']!;
-              },
-              margin: 0,
-            ),
-            leftTitles: SideTitles(
-              showTitles: true,
-              reservedSize: 5,
-              getTextStyles: (value) => const TextStyle(
-                color: Colors.white,
-                fontSize: 5,
+            ],
+            titlesData: FlTitlesData(
+              bottomTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 12,
+                getTextStyles: (value) => const TextStyle(
+                  color: Colors.black,
+                  fontSize: 8, // Adjust the font size as needed
+                ),
+                getTitles: (value) {
+                  if (value == 0) {
+                    return '';
+                  }
+                  return weightData[(value - 1).toInt()]['week']!;
+                },
+                margin: 0,
               ),
-              getTitles: (value) {
-                return value.toString();
-              },
-              margin: 10,
+              leftTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 6,
+                getTextStyles: (value) => const TextStyle(
+                  color: Colors.black,
+                  fontSize: 8, // Adjust the font size as needed
+                ),
+                getTitles: (value) {
+                  return value.toString();
+                },
+                margin: 10,
+              ),
             ),
-          ),
-          gridData: FlGridData(
-            show: true,
-            drawHorizontalLine: false, // Hide top horizontal line
-            drawVerticalLine: false, // Hide right vertical line
+            gridData: FlGridData(
+              show: true,
+              drawHorizontalLine: false, // Hide top horizontal line
+              drawVerticalLine: false, // Hide right vertical line
+            ),
           ),
         ),
       ),
@@ -336,30 +343,27 @@ class LatestWeightMessage extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.grey[300]!,
-              Colors.grey[200]!,
+              Colors.teal,
+              Colors.tealAccent,
             ],
-            stops: [0.3, 0.9],
+            stops: [0.5, 0.9],
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
-              spreadRadius: 2,
-              blurRadius: 10,
-              offset: Offset(4, 4),
+              color: Colors.black,
+              spreadRadius: 0.5,
+              blurRadius: 3,
+              offset: Offset(2, 1),
             ),
           ],
-          border: Border.all(
-            color: Colors.grey[400]!,
-            width: 2,
-          ),
         ),
         child: Center(
           child: Text(
             'Current Weight: ${latestWeight.toStringAsFixed(2)} kg\nHealth Rate: $message',
             style: TextStyle(
               fontSize: 16,
-              color: Colors.black,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
             textAlign: TextAlign.center,
           ),

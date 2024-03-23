@@ -111,18 +111,18 @@ class _UsernamePageState extends State<UsernamePage> {
                 ),
                 SizedBox(height: 20),
                 Container(
-                  width: 170,
+                  width: 150,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30.0),
                     gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
+                      colors: [Colors.cyan, Colors.tealAccent],
                       begin: Alignment.centerLeft,
                       end: Alignment.centerRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
+                        color: Colors.black,
+                        offset: Offset(2, 1),
                         blurRadius: 3,
                       ),
                     ],
@@ -130,22 +130,19 @@ class _UsernamePageState extends State<UsernamePage> {
                   child: ElevatedButton(
                     onPressed: () => _editNameDialog(context),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.transparent,
-                      elevation: 0,
-                      padding: EdgeInsets.symmetric(
-                        vertical: 15,
-                        horizontal: 30,
-                      ),
+                      padding: EdgeInsets.all(10),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5),
+                        borderRadius: BorderRadius.circular(30.0),
                       ),
+                      elevation: 0,
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.white,
                     ),
                     child: Text(
                       'EDIT USERNAME',
                       style: TextStyle(
-                        color: Colors.teal,
-                        fontSize: 14,
+                        color: Colors.white,
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                         fontFamily: '',
                       ),
