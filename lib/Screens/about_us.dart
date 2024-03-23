@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart'; // Import the url_launcher package
+import 'package:url_launcher/url_launcher.dart';
+
+import 'home.dart'; // Import the url_launcher package
 
 class FitflowHistoryPage extends StatelessWidget {
   @override
@@ -61,7 +63,11 @@ class FitflowHistoryPage extends StatelessWidget {
                 right: MediaQuery.of(context).size.width * 0.45, // Adjust the position as needed
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.pop(context); // Close the page when tapped
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => homePage()),
+                    );// Close the page when tapped
                   },
                   child: CircleAvatar(
                     backgroundColor: Colors.white,

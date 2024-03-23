@@ -86,6 +86,7 @@ class _HomePageState extends State<homePage> {
                               await Future.delayed(Duration(seconds: 2)); // Adjust the duration as needed
 
                               // Navigate to input page
+                              Navigator.pop(context);
                               Navigator.pop(context); // Close loading indicator
                               Navigator.push(
                                 context,
@@ -107,6 +108,7 @@ class _HomePageState extends State<homePage> {
                               await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
                               // Navigate to input page
                               Navigator.pop(context);
+                              Navigator.pop(context);
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -124,9 +126,8 @@ class _HomePageState extends State<homePage> {
                                   );
                                 },
                               );
-                              // Wait for 1 or 2 seconds
-                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                              // Navigate to input page
+                              await Future.delayed(Duration(seconds: 1));
+                              Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.push(
                                   context,
@@ -135,7 +136,6 @@ class _HomePageState extends State<homePage> {
                                           WeightInputPage()));
                             }),
                             buildButton(context, '', 'assets/logo.png', () async {
-                              // Show loading indicator
                               showDialog(
                                 context: context,
                                 barrierDismissible: false,
@@ -145,9 +145,8 @@ class _HomePageState extends State<homePage> {
                                   );
                                 },
                               );
-                              // Wait for 1 or 2 seconds
-                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                              // Navigate to input page
+                              await Future.delayed(Duration(seconds: 1));
+                              Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.push(
                                   context,
@@ -167,14 +166,13 @@ class _HomePageState extends State<homePage> {
                                 },
                               );
                               // Wait for 1 or 2 seconds
-                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                              // Navigate to input page
+                              await Future.delayed(Duration(seconds: 1));
+                              Navigator.pop(context);
                               Navigator.pop(context);
                               Navigator.push(context, MaterialPageRoute(builder: (context) => FitFlowApp()));
                             }),
                             buildButton(context, '', 'assets/feed.png', () async {
-                              await Future.delayed(Duration(seconds: 1)); // Adjust the duration as needed
-                              // Navigate to input page
+                              await Future.delayed(Duration(seconds: 2));
                               Navigator.pop(context);
                               Navigator.push(context, MaterialPageRoute(builder: (context) => FeedbackPage()));
                             }),

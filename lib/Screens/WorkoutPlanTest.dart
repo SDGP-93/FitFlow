@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'common_navbar.dart';
+import 'home.dart';
 
 class WorkoutPage extends StatefulWidget {
   @override
@@ -124,7 +125,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
                     ),
                   ),
                   child: Text(
-                    'SHOW WORKOUT',
+                    'Show Workout',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: screenWidth * 0.04,
@@ -160,7 +161,26 @@ class _WorkoutPageState extends State<WorkoutPage> {
               ),
               SizedBox(height: screenHeight * 0.01),
               ElevatedButton(
-                onPressed: _saveWorkoutToFirestore,
+                onPressed: () {
+                  _saveWorkoutToFirestore();
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false, // Prevent users from dismissing the dialog
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: CircularProgressIndicator(), // Show a loading indicator
+                      );
+                    },
+                  );
+                  Future.delayed(Duration(seconds: 2), () {
+                    setState(() {
+                      // Update the state to close the loading dialog
+                      Navigator.pop(context); // Close the loading dialog
+                      Navigator.pop(context); // Close the current page
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => homePage()));
+                    });
+                  });
+                },
                 child: Text(
                   'Save Workout',
                   style: TextStyle(

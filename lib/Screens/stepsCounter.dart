@@ -25,13 +25,12 @@ class _StepCountPageState extends State<StepCountPage> {
   bool _isListening = false;
   StreamSubscription<AccelerometerEvent>? _accelerometerSubscription;
   List<double> _accelerometerValues = [0, 0, 0];
+  double _screenWidth = 0.0;
 
   @override
   void initState() {
     super.initState();
-    // Load stored data from Firestore
     _loadStoredData();
-    // Start listening for accelerometer and GPS data
     _startListening();
   }
 
@@ -57,7 +56,6 @@ class _StepCountPageState extends State<StepCountPage> {
       }
     }
   }
-
 
   void _startListening() {
     _accelerometerSubscription = accelerometerEvents.listen((AccelerometerEvent event) {
@@ -97,7 +95,6 @@ class _StepCountPageState extends State<StepCountPage> {
       desiredAccuracy: LocationAccuracy.best,
       distanceFilter: 10, // meters
     ).listen((Position position) {
-      // You can calculate distance travelled here
       setState(() {
         _distanceTravelled = _distanceTravelled + position.speed! * 0.277778 * 10; // Speed * time interval (1 sec) * 10
       });
@@ -109,7 +106,6 @@ class _StepCountPageState extends State<StepCountPage> {
   }
 
   void _updateFirestore() {
-    // Update Firestore collection with user's data
     FirebaseFirestore.instance.collection('StepCount').doc(FirebaseAuth.instance.currentUser!.uid).set({
       'sensorCount': _stepCount,
       'distanceTravelled': _distanceTravelled,
@@ -120,6 +116,8 @@ class _StepCountPageState extends State<StepCountPage> {
 
   @override
   Widget build(BuildContext context) {
+    _screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
@@ -132,76 +130,69 @@ class _StepCountPageState extends State<StepCountPage> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.only(top: 210),
+          padding: EdgeInsets.only(top: 230),
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  'Sensor Count: $_stepCount',
-                  style: TextStyle(fontSize: 12), // Small text
-                  textAlign: TextAlign.center, // Align center
+                  'Sensor Rate $_stepCount',
+                  style: TextStyle(fontSize: _screenWidth * 0.025), // Adjust text size based on screen width
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 0),
+                SizedBox(height: _screenWidth * 0.01),
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.all(_screenWidth * 0.02),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(_screenWidth * 0.1),
                   ),
                   child: Text(
                     'DISTANCE WALKED ${_distanceTravelled.toStringAsFixed(2)} .m',
-                    style: TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center, // Align center
+                    style: TextStyle(fontSize: _screenWidth * 0.040, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: _screenWidth * 0.07),
                 Text(
                   'STEPS  ${calculateSteps(_distanceTravelled)}',
-                  style: TextStyle(fontSize: 38), // Big text
-                  textAlign: TextAlign.center, // Align center
+                  style: TextStyle(fontSize: _screenWidth * 0.08),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: _screenWidth * 0.04),
                 Container(
-                  padding: EdgeInsets.all(40),
+                  padding: EdgeInsets.all(_screenWidth * 0.1),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(_screenWidth * 0.02),
                     gradient: LinearGradient(
-                      colors: [Colors.teal, Colors.black],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomLeft,
+                      colors: [Colors.cyan, Colors.tealAccent],
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.bottomRight,
                     ),
                   ),
                   child: Text(
                     'Calories Burnt ♨️\n ${calculateCaloriesBurnt(calculateSteps(_distanceTravelled), _distanceTravelled).toStringAsFixed(2)} .kal',
-                    style: TextStyle(fontSize: 18,color: Colors.white),
-                    textAlign: TextAlign.center, // Align center
+                    style: TextStyle(fontSize: _screenWidth * 0.045, color: Colors.white, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: 40),
+                SizedBox(height: _screenWidth * 0.14),
                 Container(
-                  width: 50,
-                  height: 50, // Ensure width and height are equal
+                  width: _screenWidth * 0.16,
+                  height: _screenWidth * 0.16,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(85), // Half of the width/height
+                    borderRadius: BorderRadius.circular(_screenWidth * 0.17), // Make it a circle
                     gradient: LinearGradient(
                       colors: [Colors.black, Colors.black],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomLeft,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
-                        blurRadius: 3,
-                      ),
-                    ],
                   ),
                   child: ElevatedButton(
                     onPressed: _isListening ? _stopListening : _startListening,
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(_screenWidth * 0.03),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(85), // Half of the width/height
+                        borderRadius: BorderRadius.circular(_screenWidth * 0.17), // Make it a circle
                       ),
                       elevation: 0,
                       backgroundColor: Colors.transparent,
@@ -209,24 +200,24 @@ class _StepCountPageState extends State<StepCountPage> {
                     ),
                     child: Text(
                       _isListening ? 'Stop' : 'Start',
-                      style: TextStyle(fontSize: 12, color: Colors.white),
+                      style: TextStyle(fontSize: _screenWidth * 0.035, color: Colors.white),
                     ),
                   ),
                 ),
-                SizedBox(height: 60),
+                SizedBox(height: _screenWidth * 0.19),
                 Container(
-                  width: 170,
+                  width: _screenWidth * 0.5,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(_screenWidth * 0.09),
                     gradient: LinearGradient(
-                      colors: [Colors.black, Colors.black],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
+                      colors: [Colors.cyan, Colors.tealAccent],
+                      begin: Alignment.bottomLeft,
+                      end: Alignment.bottomRight,
                     ),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.teal,
-                        offset: Offset(0, 2),
+                        color: Colors.black,
+                        offset: Offset(2, 1),
                         blurRadius: 3,
                       ),
                     ],
@@ -234,32 +225,32 @@ class _StepCountPageState extends State<StepCountPage> {
                   child: ElevatedButton(
                     onPressed: _updateFirestore,
                     style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(_screenWidth * 0.02),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(_screenWidth * 0.1),
                       ),
                       elevation: 0,
                       backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.transparent,
+                      foregroundColor: Colors.white,
                     ),
                     child: Text(
                       'Update Workout Plan',
-                      style: TextStyle(fontSize: 14, color: Colors.white),
+                      style: TextStyle(fontSize: _screenWidth * 0.035, color: Colors.white),
                     ),
                   ),
                 ),
-                SizedBox(height: 40), // Add spacing below the button
+                SizedBox(height: _screenWidth * 0.04), // Add spacing below the button
                 GestureDetector(
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => homePage()), // Navigate to startup page
+                      MaterialPageRoute(builder: (context) => homePage()),
                     );
                   },
                   child: Icon(
                     Icons.arrow_back, // Use any icon you prefer
                     color: Colors.teal,
-                    size: 24,
+                    size: _screenWidth * 0.06,
                   ),
                 ),
               ],

@@ -26,8 +26,8 @@ class CommonNavBar extends StatelessWidget implements PreferredSizeWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.teal.withOpacity(0.5),
-          elevation: 3,
-          shadowColor: Colors.teal,
+          elevation: 5,
+          shadowColor: Colors.cyan,
           toolbarHeight: 40,
           leading: Padding(
             padding: const EdgeInsets.all(0.0),

@@ -192,11 +192,47 @@ class _BMRPageState extends State<BMRPage> {
                   );
                 }),
               ),
-              SizedBox(height: 15),
-              ElevatedButton(
-                onPressed: _calculateBMR,
-                child: Text('Calculate BMR'),
-              ),
+                SizedBox(height: 15),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.4,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30.0),
+                    gradient: LinearGradient(
+                      colors: [Colors.cyan, Colors.tealAccent],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black,
+                        offset: Offset(2, 1),
+                        blurRadius: 3,
+                      ),
+                    ],
+                  ),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      foregroundColor: Colors.transparent,
+                      elevation: 0,
+                      padding: EdgeInsets.symmetric(
+                        vertical: 2,
+                        horizontal: 10,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                      onPressed: _calculateBMR,
+                    child: Text(
+                      'Calculate BMR',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: MediaQuery.of(context).size.width * 0.035,
+                      ),
+                    ),
+                  ),
+                ),
               SizedBox(height: 60),
               Text(
                 'Basal Metabolic Rate(BMR)\n${_predictedBMR.replaceAll('[', '').replaceAll(']', '')}',
