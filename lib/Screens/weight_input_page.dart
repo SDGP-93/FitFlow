@@ -115,7 +115,7 @@ class _WeightInputPageState extends State<WeightInputPage> {
               ),
               SizedBox(height: 10),
               SizedBox(
-                height: 50,
+                height: 80,
                 child: DropdownButtonFormField<String>(
                   value: _selectedWeek,
                   items: _weeks.map((week) {
@@ -175,7 +175,7 @@ class _WeightInputPageState extends State<WeightInputPage> {
               ),
               SizedBox(height: 30),
               Container(
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 30),
+                padding: const EdgeInsets.fromLTRB(0, 20, 0, 40),
                 height: MediaQuery.of(context).size.height * 0.4,
                 child: _weightData.isNotEmpty
                     ? CustomGraph(weightData: _weightData.map((data) => data.cast<String, String>()).toList())

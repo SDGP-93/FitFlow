@@ -140,7 +140,7 @@ class _StepCountPageState extends State<StepCountPage> {
                   style: TextStyle(fontSize: _screenWidth * 0.025), // Adjust text size based on screen width
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: _screenWidth * 0.01),
+                SizedBox(height: _screenWidth * 0.00),
                 Container(
                   padding: EdgeInsets.all(_screenWidth * 0.02),
                   decoration: BoxDecoration(
@@ -175,7 +175,7 @@ class _StepCountPageState extends State<StepCountPage> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-                SizedBox(height: _screenWidth * 0.14),
+                SizedBox(height: _screenWidth * 0.15),
                 Container(
                   width: _screenWidth * 0.16,
                   height: _screenWidth * 0.16,
