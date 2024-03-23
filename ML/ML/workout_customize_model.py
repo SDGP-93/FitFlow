@@ -48,9 +48,7 @@ def generate_workout_plan(calories_burned, workout_plan_number):
     # Predict calories burned for each exercise
     plan_data['Predicted_Calories'] = model.predict(plan_data[['Sets', 'Reps']])
 
- # Calculate adjusted sets and reps based on the difference between reported and predicted calories burned
-    # Adjusted sets and reps are reduced if reported calories burned are higher than predicted
-    # Calculate adjusted sets and reps based on calorie difference
+ # Calculate adjusted sets and reps 
     plan_data['Adjusted_Sets'] = plan_data['Sets'] - ((calories_burned - plan_data['Predicted_Calories']) // 100)
     plan_data['Adjusted_Reps'] = plan_data['Reps'] - ((calories_burned - plan_data['Predicted_Calories']) // 50)
 
