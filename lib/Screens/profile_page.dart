@@ -240,8 +240,7 @@ class _ProfilePageState extends State<ProfilePage> {
           _selectedImage = imagePath;
         });
 
-        // Close the dialog and the common app bar
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+
 
         // Store the selected image URL in Firestore
         if (_selectedImage != null) {
