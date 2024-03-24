@@ -19,8 +19,6 @@ jobs:
         with:
           flutter-version: '2.x'
 
-      - name: Get Dependencies
-        run: flutter pub get
 
       - name: Run Tests
         run: flutter test
