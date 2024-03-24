@@ -19,9 +19,14 @@ jobs:
         with:
           flutter-version: '2.x'
 
+      - name: Get Dependencies
+        run: flutter pub get
 
-      - name: Run Tests
+      - name: Run Unit Tests
         run: flutter test
 
+      - name: Static Code Analysis
+        run: flutter analyze
 
-
+      - name: Run Widget Tests
+        run: flutter test --tags "widget_test"
