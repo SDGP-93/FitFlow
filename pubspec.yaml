@@ -7,42 +7,55 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.0 <3.4.0'  # Using latest stable Dart version (as of March 24, 2024)
+  sdk: '>=2.16.2 <3.0.0'
+
+
+
 
 dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^1.0.2
-  firebase_core: '<2.9.0'  # Consider updating to the latest stable version if compatible
-  firebase_auth: '<4.4.0'  # Consider updating to the latest stable version if compatible
 
-  charts_flutter: ^0.12.0  # Consider updating to the latest stable version if compatible
-  pedometer: '<4.0.1'      # Consider updating to the latest stable version if compatible
-  cloud_firestore: '<4.5.0' # Consider updating to the latest stable version if compatible
-  image_picker: '<0.8.7'   # Consider updating to the latest stable version if compatible
+
+
+
+  cupertino_icons: ^1.0.2
+  firebase_core: '<2.9.0'
+  firebase_auth: '<4.4.0'
+
+
+  charts_flutter: ^0.12.0
+  pedometer: '<4.0.1'
+  cloud_firestore: '<4.5.0'
+  image_picker: '<0.8.7'
   video_player: ^2.2.12
-  fl_chart: '<0.60.0'     # Consider updating to the latest stable version if compatible
+  fl_chart: '<0.60.0'
   url_launcher: ^6.0.9
   google_sign_in: '>=6.1.0 <7.0.0'
   provider: ^6.1.2
   sensors: ^2.0.3
   geolocator: ^11.0.0
   path_provider: ^2.0.2
-  mockito: '<5.3.0'        # Consider updating to the latest stable version if compatible
+  mockito: '<5.3.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: '<0.12.0'
-  test: '>=1.21.5 <3.4.0'  # Using latest stable Dart version (as of March 24, 2024)
+  test: '>=1.21.5 <3.0.0'
 
 flutter_icons:
   android: true
   ios: true
   image_path: "assets/app_logo.png"
 
-flutter_lints: ^2.0.0
+
+
+
+
+  flutter_lints: ^2.0.0
+
 
 
 
