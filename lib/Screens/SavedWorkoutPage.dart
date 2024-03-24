@@ -24,13 +24,15 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
     User? user = _auth.currentUser;
     if (user != null) {
       String userId = user.uid;
-      CollectionReference savedWorkoutsCollection =
-      _firestore.collection('users').doc(userId).collection('SavedWorkouts');
+      CollectionReference savedWorkoutsCollection = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('SavedWorkouts');
 
       try {
         QuerySnapshot querySnapshot = await savedWorkoutsCollection.get();
         List<dynamic> savedWorkouts =
-        querySnapshot.docs.map((doc) => doc.data()).toList();
+            querySnapshot.docs.map((doc) => doc.data()).toList();
         setState(() {
           _savedWorkouts = savedWorkouts;
         });
@@ -44,8 +46,10 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
     User? user = _auth.currentUser;
     if (user != null) {
       String userId = user.uid;
-      CollectionReference savedWorkoutsCollection =
-      _firestore.collection('users').doc(userId).collection('SavedWorkouts');
+      CollectionReference savedWorkoutsCollection = _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('SavedWorkouts');
 
       try {
         await savedWorkoutsCollection.doc(_savedWorkouts[index]['id']).delete();
@@ -152,20 +156,20 @@ class _SavedWorkoutsPageState extends State<SavedWorkoutsPage> {
             Expanded(
               child: _savedWorkouts.isEmpty
                   ? Center(
-                child: Text('NO WORKOUTS AVAILABLE'),
-              )
+                      child: Text('NO WORKOUTS AVAILABLE'),
+                    )
                   : ListView.builder(
-                itemCount: _savedWorkouts.length,
-                itemBuilder: (context, index) {
-                  Map<String, dynamic> workout = _savedWorkouts[index];
-                  return WorkoutCard(
-                    exercise: workout['Exercise']?.toString() ?? '',
-                    sets: workout['Sets']?.toString() ?? '',
-                    reps: workout['Reps']?.toString() ?? '',
-                    onComplete: () => _removeWorkout(index),
-                  );
-                },
-              ),
+                      itemCount: _savedWorkouts.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> workout = _savedWorkouts[index];
+                        return WorkoutCard(
+                          exercise: workout['Exercise']?.toString() ?? '',
+                          sets: workout['Sets']?.toString() ?? '',
+                          reps: workout['Reps']?.toString() ?? '',
+                          onComplete: () => _removeWorkout(index),
+                        );
+                      },
+                    ),
             ),
           ],
         ),
