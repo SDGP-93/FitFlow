@@ -1,4 +1,5 @@
 name: CI
+
 on:
   push:
     branches:
@@ -18,17 +19,11 @@ jobs:
         with:
           flutter-version: '2.x'
 
-
-      - name: Pub outDated
-        run: flutter pub outdated
-
-      - name: Pub Upgrade
-        run: flutter pub upgrade
-
-
       - name: Get Dependencies
         run: flutter pub get
 
       - name: Run Tests
         run: flutter test
+
+
 
