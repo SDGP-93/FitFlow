@@ -22,7 +22,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   firebase_core: '<2.9.0'
-  firebase_auth: ^4.17.3
+  firebase_auth: '<4.4.0'
 
 
   charts_flutter: ^0.12.0
