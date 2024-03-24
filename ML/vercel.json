@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "FlaskAPI.py", "use": "@vercel/python" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/FlaskAPI.py" }
+  ]
+}
