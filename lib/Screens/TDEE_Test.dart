@@ -70,13 +70,13 @@ class _BMRPageState extends State<BMRPage> {
 
     if (int.tryParse(_weightController.text) == null) {
       setState(() {
-        _weightError = 'Weight should be a valid number';
+        _weightError = 'weight should be a valid number';
       });
       return;
     }
 
     final response = await http.post(
-      Uri.parse('http://192.168.8.185:5000/calculate_bmr'),
+      Uri.parse('http://192.168.215.120:5000/calculate_bmr'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
