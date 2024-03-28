@@ -76,7 +76,7 @@ class _BMRPageState extends State<BMRPage> {
     }
 
     final response = await http.post(
-      Uri.parse('https://9771-124-43-78-135.ngrok-free.app/calculate_bmr'),
+      Uri.parse('http://10.31.1.90:5000/calculate_bmr'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

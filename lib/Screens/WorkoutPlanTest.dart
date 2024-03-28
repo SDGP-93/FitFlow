@@ -22,7 +22,7 @@ class _WorkoutPageState extends State<WorkoutPage> {
 
   Future<void> _generateWorkout() async {
     final response = await http.post(
-      Uri.parse('https://9771-124-43-78-135.ngrok-free.app/generate_workout'),
+      Uri.parse('http://10.31.1.90:5000/generate_workout'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
